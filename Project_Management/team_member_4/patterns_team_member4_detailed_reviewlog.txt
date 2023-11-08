@@ -7,8 +7,7 @@ Maybe add some methods to composite that shows that class can add or remove elem
 
 Reviewer's name: Catarina Pedroso
 Subject in review: Template
-Review: The pattern is well identified, but it may also be good do connect the general explanation with the code founded.
-
+Review: The pattern is well identified and the code snippet ilustrates it well.
 
 Reviewer's name:
 Subject in review:
