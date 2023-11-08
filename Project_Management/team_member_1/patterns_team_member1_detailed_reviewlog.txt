@@ -7,3 +7,8 @@ Review: The design pattern is  well explained, alongside with a good diagram.
 Reviewer's name: Renata Henriques
 Subject in review: Facade Pattern
 Review: The design pattern is  well explained, the diagram is good.
+
+Reviewer's Name: Catarina Costa
+Subject in review: Observer
+Review: Identifies the pattern correctly and the different classes/interfaces involved in it.
+Gives a good explanation of how the pattern works in the project.

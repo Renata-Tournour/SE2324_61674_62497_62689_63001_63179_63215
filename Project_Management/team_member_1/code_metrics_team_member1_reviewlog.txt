@@ -4,8 +4,3 @@ Reviewer's Name: Renata Henriques
 Subject in review: Chidamber and Kemerer
 Review: The document explains all the parameters and provides examples of problematic areas for each parameter.
 I believe the report is complete and contains the necessary information.
-
-Reviewer's Name: Catarina Costa
-Subject in review: Observer
-Review: Identifies the pattern correctly and the different classes/interfaces involved in it.
-Gives a good explanation of how the pattern works in the project.
