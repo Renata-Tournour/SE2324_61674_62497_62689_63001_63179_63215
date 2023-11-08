@@ -1,0 +1,6 @@
+Code smell review:
+
+Reviewer's name: Joana Monteiro
+Subject in review: Long Method
+Review: Identified well the code smell, with the help of a good illustration.
+The solution is also good.
