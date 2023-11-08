@@ -12,4 +12,3 @@ Review: The pattern is well identified and the code snippet ilustrates it well.
 Reviewer's name: Renata Henriques
 Subject in review: Memento
 Review: The pattern is well identified and explained.
-It could have shown the code snippet in which the previous unit state is used.
