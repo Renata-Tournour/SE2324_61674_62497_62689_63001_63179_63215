@@ -6,8 +6,8 @@ Review: The pattern is well identified in the code and matches class diagram. Th
 
 Reviewer's name: Catarina Pedroso
 Subject in review: Decorator
-Review:
-
-Reviewer's name:
-Subject in review: Template
 Review: The pattern is well identified and explained, identifying all the relevant classes.
+
+Reviewer's name: Joana Monteiro
+Subject in review: Template
+Review: The pattern is well explained and demonstrated not only from the code but also with the diagram.
