@@ -9,6 +9,6 @@ Reviewer's name: Command
 Subject in review: Command Pattern
 Review:
 
-Reviewer's name:
+Reviewer's name: Madalena Plácido
 Subject in review: Memento Pattern
-Review:
+Review: explains the pattern in detail and the pattern fits the description.
