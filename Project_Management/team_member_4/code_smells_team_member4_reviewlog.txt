@@ -1,8 +1,8 @@
 Code Smells Review
 
-Reviewer's name: 
-Subject in review:
-Review:
+Reviewer's name: Renata Henriques
+Subject in review: Long Method
+Review: Identified well the code smell and the solution seems good.
 
 Reviewer's name: Beatriz Rosas
 Subject in review: Data Class

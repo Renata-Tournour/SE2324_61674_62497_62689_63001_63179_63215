@@ -4,3 +4,7 @@ Reviewer's name: Joana Monteiro
 Subject in review: Long Method
 Review: Identified well the code smell, with the help of a good illustration.
 The solution is also good.
+
+Reviewer's name: Renata Henriques
+Subject in review: Message chain
+Review: Identified well the code smell and the solution seems good.

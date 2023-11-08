@@ -1,8 +1,9 @@
 Code Smells Review
 
-Reviewer's name:
-Subject in review:
-Review:
+Reviewer's name: Renata Henriques
+Subject in review: Long parameter list
+Review:  Explains well why it's a Long Parameter List (5 parameters), showed the code where it occurs,
+and provides a solution. Could have mentioned the number of parameters.
 
 
 Reviewer's name: Catarina Pedroso
