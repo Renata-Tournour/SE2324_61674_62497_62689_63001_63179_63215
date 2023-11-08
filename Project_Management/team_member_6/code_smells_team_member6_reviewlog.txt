@@ -1,0 +1,5 @@
+Code Smells
+
+Reviewer's name: Madalena Plácido
+Subject in review: Long Parameter List
+Review: identified the code smell well

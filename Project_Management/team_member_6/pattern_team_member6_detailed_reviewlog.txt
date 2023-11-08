@@ -1,0 +1,14 @@
+Design Patterns Review
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Template Method Pattern
+Review: Identifies well the template method pattern and justify it very well.
+Maybe add those abstract methods to the class diagram.
+
+Reviewer's name: Command
+Subject in review: Command Pattern
+Review:
+
+Reviewer's name: Madalena Plácido
+Subject in review: Memento Pattern
+Review: explains the pattern in detail and the pattern fits the description.
