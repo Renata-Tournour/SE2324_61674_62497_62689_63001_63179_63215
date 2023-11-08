@@ -8,3 +8,7 @@ The solution is also good.
 Reviewer's name: Renata Henriques
 Subject in review: Message chain
 Review: Identified well the code smell and the solution seems good.
+
+Reviewer's name: Catarina Costa
+Subject in review: Data Clumps
+Review: Identifies the code smell, shows examples of the problem, and gives a practical solution to it.
