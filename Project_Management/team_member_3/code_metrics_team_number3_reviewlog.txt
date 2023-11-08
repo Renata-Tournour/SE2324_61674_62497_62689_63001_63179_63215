@@ -1,0 +1,6 @@
+Code Metrics Review
+
+Reviewer's name: Catarina Costa
+Subject in review: Joana Monteiro
+Review: The document explains every parameter clearly and gives the worst example for each one. 
+Explains well the impact of the metric on the whole project, its implications, and how that could lead to the existence of the inappropriate intimacy code smell.

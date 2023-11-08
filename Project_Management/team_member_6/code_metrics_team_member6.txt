@@ -1,0 +1,8 @@
+Code Metrics Review
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Martin Packaging Metric
+Review: Explains well each metric.
+Gives good examples from the Freecol code.
+Maybe some code smells that may be correlated with the metrics.
+
