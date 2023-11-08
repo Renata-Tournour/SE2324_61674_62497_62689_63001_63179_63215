@@ -11,6 +11,7 @@ Subject in review: Message Chain
 Review: Explains well why the Data Class smell was identified and gives a solution.
 
 
-Reviewer's name:
-Subject in review:
-Review: Explains why the Data Class smell was identified and gives a solution.
+Reviewer's name: Beatriz Rosas
+Subject in review: Long Method
+Review: Identifies the code smell correctly and gives a good solution.
+Maybe add the total number of lines of the method.
