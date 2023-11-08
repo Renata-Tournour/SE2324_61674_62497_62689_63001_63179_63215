@@ -9,6 +9,6 @@ Reviewer's name:
 Subject in review: Data Class
 Review:
 
-Reviewer's name:
+Reviewer's name: Madalena Plácido
 Subject in review: Long Method
-Review:
+Review: Identifies the long method accurately and suggests an effective way to solve the smell.
