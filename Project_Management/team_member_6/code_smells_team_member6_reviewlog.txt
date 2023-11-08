@@ -1,5 +1,12 @@
 Code Smells
 
+Reviewer's name: Joana Monteiro
+Subject in review: Message Chain
+Review: Identified well the code smell, with the help of a good illustration.
+The solution is also good
+
 Reviewer's name: Madalena Plácido
 Subject in review: Long Parameter List
 Review: identified the code smell well
+
+
