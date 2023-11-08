@@ -5,9 +5,9 @@ Subject in review: Template Method Pattern
 Review: Identifies well the template method pattern and justify it very well.
 Maybe add those abstract methods to the class diagram.
 
-Reviewer's name: Command
+Reviewer's name: Catarina Costa
 Subject in review: Command Pattern
-Review:Provides a good explanation of the design pattern and relates it well with the project, showing a diagram representing the pattern and code snippets of the classes.
+Review: Provides a good explanation of the design pattern and relates it well with the project, showing a diagram representing the pattern and code snippets of the classes.
 
 Reviewer's name: Madalena Plácido
 Subject in review: Memento Pattern
