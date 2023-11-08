@@ -1,12 +1,17 @@
 Design Patterns Review
 
 Reviewer's name: Catarina Pedroso
-Subject in review: Observer
+Subject in review: Observer Pattern
 Review:
 
-Reviewer's name:
-Subject in review:
-Review:
+Reviewer's name: Beatriz Rosas
+Subject in review: Facade Pattern
+Review: Identifies the facade pattern well.
+Add the diagrams class to ilustrate better the pattern.
+Show the class that interact with FreeColServer at Client level (the main class).
+Include some methods that client class calls from FreeColServer that accesses other classes
+(to ilustrate better the wrapper functionality of FreeColServer facade).
+
 
 Reviewer's name:
 Subject in review:
