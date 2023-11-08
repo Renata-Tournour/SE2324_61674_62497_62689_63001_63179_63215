@@ -1,0 +1,6 @@
+Code Metrics Review
+
+Reviewer's Name: Renata Henriques
+Subject in review: Chidamber and Kemerer
+Review: The document explains all the parameters and provides examples of problematic areas for each parameter.
+I believe the report is complete and contains the necessary information.
