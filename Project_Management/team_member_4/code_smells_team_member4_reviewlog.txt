@@ -6,7 +6,8 @@ Review:
 
 Reviewer's name: Beatriz Rosas
 Subject in review: Data Class
-Review: Identifies well the code smell and explains it in a very direct and simple way. The given solution it's good.
+Review: Identifies well the code smell and explains it in a very direct and simple way.
+The given solution it's good.
 
 Reviewer's name:
 Subject in review:
