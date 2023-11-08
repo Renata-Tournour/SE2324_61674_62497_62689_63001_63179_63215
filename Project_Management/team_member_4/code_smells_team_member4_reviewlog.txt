@@ -1,6 +1,6 @@
 Code Smells Review
 
-Reviewer's name:
+Reviewer's name: 
 Subject in review:
 Review:
 
@@ -9,6 +9,7 @@ Subject in review: Data Class
 Review: Identifies well the code smell and explains it in a very direct and simple way.
 The given solution it's good.
 
-Reviewer's name:
-Subject in review:
-Review:
+Reviewer's name: Joana Monteiro
+Subject in review: Long Parameter List
+Review: Explains well the code smell, with the help of a good illustration.
+The given solution it's good.
