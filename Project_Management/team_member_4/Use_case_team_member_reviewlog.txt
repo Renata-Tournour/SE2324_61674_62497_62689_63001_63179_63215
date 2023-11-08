@@ -1,0 +1,8 @@
+Use Case Diagram Review
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Initial Menus - Use Case Diagram
+Review: I think it's a good representation of the Initial Menu Panel.
+If it makes sense, add more Use Cases that extend Set Preferences (for selecting Audio or Language, for example).
+Maybe show more info about the Edit Map Use Case.
+

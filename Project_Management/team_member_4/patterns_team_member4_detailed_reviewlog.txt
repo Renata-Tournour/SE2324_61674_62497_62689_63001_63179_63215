@@ -1,0 +1,14 @@
+Design Patterns Review
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Composite
+Review: The pattern is well identified and explained.
+Maybe add some methods to composite that shows that class can add or remove elements from its list of missions.
+
+Reviewer's name:
+Subject in review:
+Review:
+
+Reviewer's name:
+Subject in review:
+Review:

@@ -1,0 +1,13 @@
+Design Patterns Review
+
+Reviewer's name: Madalena Plácido
+Subject in review: Composite
+Review: The pattern is well identified in the code and matches class diagram. The text section clearly explains the rationale for identifying this pattern.
+
+Reviewer's name:
+Subject in review: Decorator
+Review:
+
+Reviewer's name:
+Subject in review: Template
+Review:

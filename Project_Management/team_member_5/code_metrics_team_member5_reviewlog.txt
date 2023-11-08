@@ -1,0 +1,5 @@
+Code Metrics Review
+
+Reviewer's Name: Madalena Plácido
+Subject in review: MOOD
+Review: Due to these metrics not being fully functional in the intelij plugin, this report will later be replaced with one from another metric. Nevertheless the report is very detailed about each metric and compares the results of the diferent metrics with the optimal intervals. Could have mentioned an example of code smell which could be identified with these metrics.
