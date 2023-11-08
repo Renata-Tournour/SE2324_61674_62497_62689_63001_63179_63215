@@ -8,6 +8,6 @@ Reviewer's name: Madalena Plácido
 Subject in review: Data Class
 Review: Identifies and explains the data class well and suggest an effective way to solve the smell.
 
-Reviewer's name:
+Reviewer's name: Catarina Costa
 Subject in review: Data Clumps
-Review:
+Review: Correctly identifies the code smell and gives an easy solution to the problem using code already implemented in the project.
