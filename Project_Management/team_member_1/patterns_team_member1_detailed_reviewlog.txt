@@ -1,0 +1,5 @@
+Design Patterns Review
+
+Reviewer's name: Joana Monteiro
+Subject in review: Template Method Pattern
+Review: The design pattern is  well explained, alongside with a good diagram.
