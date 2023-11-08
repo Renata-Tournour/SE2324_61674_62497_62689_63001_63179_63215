@@ -8,3 +8,7 @@ Update: The report now portraits the patterns structure well
 Reviewer's name: Renata Henriques
 Subject in review: Memento
 Review: The pattern is well explained, could have shown more parts of the code snippet.
+
+Reviewer's name: Catarina Costa
+Subject in review: Factory Method
+Review: Gives a good explanation and shows clearly how it is used in the project
