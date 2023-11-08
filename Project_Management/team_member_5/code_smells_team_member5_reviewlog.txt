@@ -1,8 +1,8 @@
 Code Smells Review
 
-Reviewer's name:
+Reviewer's name: Catarina Pedroso
 Subject in review: Long Method
-Review:
+Review: Explains well why the smell was identified and gives a solution.
 
 Reviewer's name: Madalena Plácido
 Subject in review: Data Class

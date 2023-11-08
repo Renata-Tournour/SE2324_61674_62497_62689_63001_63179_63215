@@ -5,9 +5,10 @@ Subject in review: Speculative Generality
 Review: Identifies well the code smell.
 Gives a practical solution for get rid of it.
 
-Reviewer's name:
+Reviewer's name: Catarina Pedroso
 Subject in review: Data Class
-Review:
+Review: Explains well why the Data Class smell was identified and gives a solution.
+
 
 Reviewer's name: Madalena Plácido
 Subject in review: Long Method

@@ -1,0 +1,15 @@
+Code Smells Review
+
+Reviewer's name:
+Subject in review:
+Review:
+
+
+Reviewer's name: Catarina Pedroso
+Subject in review: Message Chain
+Review: Explains well why the Data Class smell was identified and gives a solution.
+
+
+Reviewer's name:
+Subject in review:
+Review: Explains why the Data Class smell was identified and gives a solution.
