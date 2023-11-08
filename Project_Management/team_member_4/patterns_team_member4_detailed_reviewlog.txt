@@ -5,9 +5,10 @@ Subject in review: Composite
 Review: The pattern is well identified and explained.
 Maybe add some methods to composite that shows that class can add or remove elements from its list of missions.
 
-Reviewer's name:
-Subject in review:
-Review:
+Reviewer's name: Catarina Pedroso
+Subject in review: Template
+Review: The pattern is well identified, but it may also be good do connect the general explanation with the code founded.
+
 
 Reviewer's name:
 Subject in review:
