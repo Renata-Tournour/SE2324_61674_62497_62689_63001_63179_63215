@@ -9,4 +9,7 @@ Reviewer's name: Madalena Plácido
 Subject in review: Long Parameter List
 Review: identified the code smell well
 
+Reviewer's name: Catarina Costa
+Subject in review: Long Method
+Review: Identifies correctly the code smell, describes the problems with it, and provides a good solution
 
