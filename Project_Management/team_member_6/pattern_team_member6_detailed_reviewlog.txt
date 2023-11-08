@@ -7,7 +7,7 @@ Maybe add those abstract methods to the class diagram.
 
 Reviewer's name: Command
 Subject in review: Command Pattern
-Review:
+Review:Provides a good explanation of the design pattern and relates it well with the project, showing a diagram representing the pattern and code snippets of the classes.
 
 Reviewer's name: Madalena Plácido
 Subject in review: Memento Pattern
