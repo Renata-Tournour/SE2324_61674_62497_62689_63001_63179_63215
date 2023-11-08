@@ -1,1 +1,5 @@
-Reviewer's name:
+Design Patterns
+
+Reviewer's name: Madalena Plácido
+Subject in review: Composite
+Review: The pattern is well identified in the code and matches class diagram. The text section clearly explains the rationale for identifying this pattern.
