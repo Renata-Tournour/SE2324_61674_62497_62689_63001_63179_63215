@@ -1,0 +1,14 @@
+Code Smells Review
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Speculative Generality
+Review: Identifies well the code smell.
+Gives a practical solution for get rid of it.
+
+Reviewer's name:
+Subject in review: Data Class
+Review:
+
+Reviewer's name:
+Subject in review: Long Method
+Review:
