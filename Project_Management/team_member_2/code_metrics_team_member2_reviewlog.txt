@@ -1,0 +1,5 @@
+Code Metrics Review
+
+Reviewer's Name: Catarina Pedroso
+Subject in review: Complexity metrics
+Review: Explains the metrics, indicating the different levels and an individual explanations for each parameter. Could explain a little better each parameter.
