@@ -1,0 +1,5 @@
+Use Case Diagram Review
+
+Reviewer's name: Catarina Pedroso
+Subject in review: Use Case Combat
+Review: The diagram seems good, very detailed and the use cases descriptions are easy to understand
