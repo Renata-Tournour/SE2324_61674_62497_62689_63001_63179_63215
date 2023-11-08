@@ -1,5 +1,5 @@
 Use Case Diagram Review
 
-Reviewer's name:
+Reviewer's name: Renata Henriques
 Subject in review: Europe Management Panel - Use Case Diagram
-Review:
+Review: I believe it's a good use case diagram, but the descriptions of the use cases could be a bit more detailed
