@@ -4,3 +4,7 @@ Reviewer's name: Madalena Plácido
 Subject in review: Template
 Review: I think the code snippet of the class "Number" was cut slighly more than it should have. It just missed the getCategory method in the abstract class.
 Update: The report now portraits the patterns structure well
+
+Reviewer's name: Renata Henriques
+Subject in review: Memento
+Review: The pattern is well explained, could have shown more parts of the code snippet.

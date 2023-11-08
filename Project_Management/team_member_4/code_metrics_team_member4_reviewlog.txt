@@ -1,5 +1,7 @@
 Code Metrics Review
 
-Reviewer's name:
-Subject in review:
-Review:
+Reviewer's name: Joana Monteiro
+Subject in review: Lines Of Code Metric
+Review: Explains well what the metric is about.
+Mentions the impact of high number of lines- the code smell large class.
+Also, demonstrates the values of each metric.
