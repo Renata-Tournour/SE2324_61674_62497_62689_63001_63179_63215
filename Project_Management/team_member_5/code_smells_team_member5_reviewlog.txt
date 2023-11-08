@@ -1,1 +1,5 @@
-Reviewer's name:
+Code Smells Review
+
+Reviewer's name: Madalena Plácido
+Subject in review: Data Class
+Review: Identifies and explains the data class well and suggest an effective way to solve the smell.
