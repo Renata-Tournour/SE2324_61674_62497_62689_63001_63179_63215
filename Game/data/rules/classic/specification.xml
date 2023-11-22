@@ -766,8 +766,8 @@
     <tile-type id="model.tile.volcano"
                basic-move-cost="12" basic-work-turns="7"
                is-elevation="true" can-settle="false">
-      <gen humidity-minimum="0" humidity-maximum="100"
-           temperature-minimum="0" temperature-maximum="40"
+      <gen humidity-minimum="0" humidity-maximum="50"
+           temperature-minimum="10" temperature-maximum="40"
            altitude-minimum="20" altitude-maximum="30"/>
       <modifier id="model.modifier.defence" index="50"
                 type="percentage" value="175"/>
