@@ -2242,6 +2242,18 @@
       <ability id="model.ability.canBeCaptured"
                value="true"/>
     </unit-type>
+    <unit-type id="model.unit.wagonWithHorses" extends="wagon"
+               offence="0" defence="1" movement="24"
+               score-value="1" spaceTaken="12" space="2">
+      <limit id="model.limit.wagonTrains" operator="lt">
+        <left-hand-side operand-type="units" scope-level="player" />
+        <right-hand-side operand-type="settlements" scope-level="player" />
+      </limit>
+      <ability id="model.ability.carryGoods"
+               value="true"/>
+      <ability id="model.ability.canBeCaptured"
+               value="true"/>
+    </unit-type>
     <!--
         <unit-type id="model.unit.milkmaid" extends="colonist"
         expert-production="model.goods.grain" />
