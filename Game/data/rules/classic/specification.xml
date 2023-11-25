@@ -2245,6 +2245,10 @@
     <unit-type id="model.unit.wagonWithHorses" extends="wagon"
                offence="0" defence="1" movement="24"
                score-value="1" spaceTaken="12" space="2">
+      <required-goods id="model.goods.hammers"
+                      value="40"/>
+      <required-goods id="model.goods.horses"
+                      value="1"/>
       <limit id="model.limit.wagonTrains" operator="lt">
         <left-hand-side operand-type="units" scope-level="player" />
         <right-hand-side operand-type="settlements" scope-level="player" />

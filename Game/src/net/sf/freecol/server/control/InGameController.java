@@ -2709,7 +2709,11 @@ public final class InGameController extends Controller {
                     "movesLeft", String.valueOf(dst.getMovesLeft()));
             }
         }
-
+        if(!carrier.isNaval() && goodsType.isBreedable()){
+            UnitType wagonWithHorses = this.getFreeColServer().getSpecification().getUnitType("model.unit.wagonWithHorses");
+            carrier.setType(wagonWithHorses);
+            cs.add(See.only(serverPlayer),carrier);
+        }
         // Invisible in settlement
         return cs;
     }
@@ -3866,6 +3870,11 @@ public final class InGameController extends Controller {
             cs.add(See.perhaps(), (FreeColGameObject)carrier.getLocation());
             // Others might see a capacity change.
             getGame().sendToOthers(serverPlayer, cs);
+        }
+        if(!carrier.isNaval() && goodsType.isBreedable()){
+            UnitType wagonTrain = this.getFreeColServer().getSpecification().getUnitType("model.unit.wagonTrain");
+            carrier.setType(wagonTrain);
+            cs.add(See.only(serverPlayer),carrier);
         }
         return cs;
     }

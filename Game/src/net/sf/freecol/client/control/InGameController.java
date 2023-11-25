@@ -3798,11 +3798,6 @@ public final class InGameController extends FreeColClientHolder {
             return buyGoods(goods.getType(), goods.getAmount(), carrier);
         }
 
-        if(!carrier.isNaval() && goods.getType().isBreedable()){
-            UnitType wagonWithHorses = this.getSpecification().getUnitType("model.unit.wagonWithHorses");
-            carrier.changeType(wagonWithHorses);
-        }
-
         UnitWas carrierWas = new UnitWas(carrier);
         UnitWas sourceWas = null;
         ColonyWas colonyWas = null;
