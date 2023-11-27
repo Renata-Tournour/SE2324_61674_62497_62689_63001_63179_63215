@@ -1075,6 +1075,16 @@ public final class InGameController extends FreeColClientHolder {
         moveMode = moveMode.maximize(MoveMode.END_TURN);
 
         changeView(null);
+
+        for(Unit unit: player.getUnitSet()){
+            if(unit.getType().getId().equals("model.unit.wagonTrain")){
+                int turnsLeft = unit.getTurnsLeft();
+                if(turnsLeft > 0){
+                    unit.setTurnsLeft(turnsLeft-1);
+                }
+            }
+        }
+
         final List<Unit> units = transform(player.getUnits(), Unit::couldMove);
         units.stream().forEach(unit -> {
             if (unit.getState() != Unit.UnitState.SKIPPED) {

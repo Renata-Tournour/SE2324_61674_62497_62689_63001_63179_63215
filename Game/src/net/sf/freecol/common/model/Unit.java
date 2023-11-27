@@ -316,6 +316,12 @@ public class Unit extends GoodsLocation
      */
     protected int visibleGoodsCount;
 
+    /**
+     * The amount of turns this unit has left.
+     * When it reaches zero, the unit must disappear from the map.
+     */
+    protected int turnsLeft;
+
 
     /**
      * Constructor for ServerUnit.
@@ -1186,6 +1192,18 @@ public class Unit extends GoodsLocation
     @Override
     public int getMovesLeft() {
         return movesLeft;
+    }
+
+    /**
+     * Get the number of turns @code Unit} has before it disappear.
+     * @return The number of turns this @code Unit} has left
+     */
+    public int getTurnsLeft(){
+        return this.type.getTurnsLeft();
+    }
+
+    public void setTurnsLeft(int num){
+        this.type.setTurnsLeft(num);
     }
 
     /**
