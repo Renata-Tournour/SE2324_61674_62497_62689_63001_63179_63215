@@ -1196,14 +1196,19 @@ public class Unit extends GoodsLocation
 
     /**
      * Get the number of turns @code Unit} has before it disappear.
-     * @return The number of turns this @code Unit} has left
+     * @return The number of turns this @code Unit} has left.
      */
     public int getTurnsLeft(){
-        return this.type.getTurnsLeft();
+        return this.turnsLeft;
     }
 
+    /**
+     * Set the number of turns left of this @code Unit}
+     * @param num The new number of turns left.
+     */
     public void setTurnsLeft(int num){
-        this.type.setTurnsLeft(num);
+
+        this.turnsLeft = num;
     }
 
     /**
@@ -4667,6 +4672,7 @@ public class Unit extends GoodsLocation
         this.treasureAmount = o.getTreasureAmount();
         this.attrition = o.getAttrition();
         this.visibleGoodsCount = o.getVisibleGoodsCount();
+        //this.turnsLeft = o.getTurnsLeft();
 
         this.owner.addUnit(this);
         return true;
@@ -4709,6 +4715,8 @@ public class Unit extends GoodsLocation
     private static final String UNIT_TYPE_TAG = "unitType";
     private static final String VISIBLE_GOODS_COUNT_TAG = "visibleGoodsCount";
     private static final String WORK_LEFT_TAG = "workLeft";
+
+    private static final String TURNS_LEFT_TAG = "turns-left";
     private static final String WORK_TYPE_TAG = "workType";
     // @compat 0.11.0
     private static final String OLD_EQUIPMENT_TAG = "equipment";
@@ -4730,6 +4738,8 @@ public class Unit extends GoodsLocation
         xw.writeAttribute(UNIT_TYPE_TAG, this.type);
 
         xw.writeAttribute(MOVES_LEFT_TAG, movesLeft);
+
+        xw.writeAttribute(TURNS_LEFT_TAG, turnsLeft);
 
         xw.writeAttribute(STATE_TAG, state);
 
@@ -4850,6 +4860,9 @@ public class Unit extends GoodsLocation
                                                 true);
 
         movesLeft = xr.getAttribute(MOVES_LEFT_TAG, 0);
+
+        turnsLeft = xr.getAttribute(TURNS_LEFT_TAG, 3);
+        System.out.println(xr.getAttribute(TURNS_LEFT_TAG, 0));
 
         workLeft = xr.getAttribute(WORK_LEFT_TAG, 0);
 

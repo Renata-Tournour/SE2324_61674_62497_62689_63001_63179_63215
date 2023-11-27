@@ -1079,9 +1079,7 @@ public final class InGameController extends FreeColClientHolder {
         for(Unit unit: player.getUnitSet()){
             if(unit.getType().getId().equals("model.unit.wagonTrain")){
                 int turnsLeft = unit.getTurnsLeft();
-                if(turnsLeft > 0){
-                    unit.setTurnsLeft(turnsLeft-1);
-                }
+                unit.setTurnsLeft(turnsLeft-1);
             }
         }
 
