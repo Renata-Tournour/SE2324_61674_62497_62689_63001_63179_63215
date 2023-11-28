@@ -1280,7 +1280,6 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      *
      * Used by the terrain generator.
      *
-     * @param mountains The mountain tile type.
      * @return True if this is a good potential elevated tile.
      */
     public boolean isGoodMountainTile() {
@@ -1943,7 +1942,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      *
      * @return The map of cached tiles.
      */
-    private java.util.Map<Player, Tile> getCachedTiles() {
+    public java.util.Map<Player, Tile> getCachedTiles() {
         return this.cachedTiles;
     }
 

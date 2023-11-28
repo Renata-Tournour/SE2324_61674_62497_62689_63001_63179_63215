@@ -157,6 +157,8 @@ public final class InGameController extends Controller {
     /** The server random number source. */
     private Random random;
 
+    private int counter = 0;
+
     /** Debug helpers, do not serialize. */
     private int debugOnlyAITurns = 0;
     private MonarchAction debugMonarchAction = null;
@@ -2020,6 +2022,42 @@ public final class InGameController extends Controller {
         return cs;
     }
 
+    /**
+     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * @param min - minimum amount in range
+     * @param max - maximum amount in range
+     * @return a random number in the given range
+     */
+    private int getRandomNumberInRange(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    /**
+     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * @param serverGame - The {@code ServerPlayer} to end the turn of.
+     * @return the volcano tiles explored by a non AI player
+     */
+    private List<Tile> getExploredVolcanosByNonAIPlayers(final ServerGame serverGame) {
+        Map map = serverGame.getMap();
+        List<Tile> volcanoTiles = map.getTileList(t -> t.getType().getId().equals("model.tile.volcano"));
+        List<Tile> volcanoTilesExploredByNonAIPlayer = new ArrayList<>();
+
+        for (Tile v : volcanoTiles) {
+            //System.out.println("todos: x = " + v.getX() + "; y = " + v.getY());
+            java.util.Map<Player, Tile> exploredTiles = v.getCachedTiles();
+            if (!exploredTiles.isEmpty()){
+                java.util.Set<Player> players = exploredTiles.keySet();
+                java.util.Collection<Tile> tiles = exploredTiles.values();
+                for (Player p: players) {
+                    if(!p.isAI()) {
+                        volcanoTilesExploredByNonAIPlayer.addAll(tiles);
+                    }
+                }
+            }
+        }
+
+        return volcanoTilesExploredByNonAIPlayer;
+    }
 
     /**
      * Ends the turn of the given player.
@@ -2046,6 +2084,11 @@ public final class InGameController extends Controller {
             current.csEndTurn(cs);
             logger.finest("Ending turn for " + current.getName());
             current.clearModelMessages();
+
+            // Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+            List<Tile> volcanoTilesExploredByNonAIPlayer = getExploredVolcanosByNonAIPlayers(serverGame);
+            /*for (Tile t: volcanoTilesExploredByNonAIPlayer)
+                System.out.println("descobertos: x = " + t.getX() + "; y = " + t.getY());*/
 
             // Check for new turn
             if (serverGame.isNextPlayerInNewTurn()) {
