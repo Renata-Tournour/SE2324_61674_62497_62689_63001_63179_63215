@@ -157,7 +157,13 @@ public final class InGameController extends Controller {
     /** The server random number source. */
     private Random random;
 
-    private int counter = 0;
+    private int timeToChange = 0;
+
+    /**
+     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * map of volcanos tiles and the turn where they were explored by a non AI player
+     */
+    private java.util.Map<Tile, Turn> unchangedVolcanos = new HashMap<>();
 
     /** Debug helpers, do not serialize. */
     private int debugOnlyAITurns = 0;
@@ -2034,30 +2040,43 @@ public final class InGameController extends Controller {
 
     /**
      * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
-     * @param serverGame - The {@code ServerPlayer} to end the turn of.
      * @return the volcano tiles explored by a non AI player
      */
-    private List<Tile> getExploredVolcanosByNonAIPlayers(final ServerGame serverGame) {
+   private void getExploredVolcanosByNonAIPlayers() {
+        final ServerGame serverGame = getGame();
         Map map = serverGame.getMap();
         List<Tile> volcanoTiles = map.getTileList(t -> t.getType().getId().equals("model.tile.volcano"));
-        List<Tile> volcanoTilesExploredByNonAIPlayer = new ArrayList<>();
+        java.util.Map<Tile, Turn> volcanoTilesExplored = new HashMap<>();
 
         for (Tile v : volcanoTiles) {
             //System.out.println("todos: x = " + v.getX() + "; y = " + v.getY());
             java.util.Map<Player, Tile> exploredTiles = v.getCachedTiles();
-            if (!exploredTiles.isEmpty()){
-                java.util.Set<Player> players = exploredTiles.keySet();
-                java.util.Collection<Tile> tiles = exploredTiles.values();
-                for (Player p: players) {
-                    if(!p.isAI()) {
-                        volcanoTilesExploredByNonAIPlayer.addAll(tiles);
-                    }
-                }
+            for (java.util.Map.Entry<Player, Tile> entry : exploredTiles.entrySet()) {
+                if(!entry.getKey().isAI() && !volcanoTilesExplored.containsKey(entry.getValue()))
+                    volcanoTilesExplored.put(entry.getValue(), serverGame.getTurn());
             }
         }
-
-        return volcanoTilesExploredByNonAIPlayer;
+        for (Entry<Tile, Turn> entry : volcanoTilesExplored.entrySet()) {
+            if (!unchangedVolcanos.containsKey(entry.getKey()))
+                unchangedVolcanos.put(entry.getKey(), entry.getValue());
+        }
     }
+
+    /*private void getTimeToChange(){
+        int nVolcanos = unchangedVolcanos.size();
+        final Game game = getGame();
+        int currentTurn = game.getTurn().getNumber();
+        // we would like to keep at least one volcano in the map (so you can see it)
+        // and to show our feature the other ones will eventually become a mountain
+        if(nVolcanos > 1){
+            if(currentTurn == timeToChange) {
+                int num = getRandomNumberInRange(0, nVolcanos);
+                //unchangedVolcanos.get(num).changeToMountain();
+                unchangedVolcanos.remove(num);
+                timeToChange += getRandomNumberInRange(5, 10);
+            }
+        }
+    }*/
 
     /**
      * Ends the turn of the given player.
@@ -2086,9 +2105,11 @@ public final class InGameController extends Controller {
             current.clearModelMessages();
 
             // Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
-            List<Tile> volcanoTilesExploredByNonAIPlayer = getExploredVolcanosByNonAIPlayers(serverGame);
-            /*for (Tile t: volcanoTilesExploredByNonAIPlayer)
-                System.out.println("descobertos: x = " + t.getX() + "; y = " + t.getY());*/
+            getExploredVolcanosByNonAIPlayers();
+            /*for (java.util.Map.Entry<Tile, Turn> entry : unchangedVolcanos.entrySet()) {
+                System.out.println("descobertos: x = " + entry.getKey().getX() + "; y = " +
+                                    entry.getKey().getY() + "; turn = " + entry.getValue().getNumber());
+            }*/
 
             // Check for new turn
             if (serverGame.isNextPlayerInNewTurn()) {
