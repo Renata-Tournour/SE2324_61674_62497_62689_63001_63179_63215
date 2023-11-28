@@ -1077,9 +1077,19 @@ public final class InGameController extends FreeColClientHolder {
         changeView(null);
 
         for(Unit unit: player.getUnitSet()){
-            if(unit.getType().getId().equals("model.unit.wagonTrain")){
+            if(unit.getType().getId().equals("model.unit.wagonTrain") ||
+                    unit.getType().getId().equals("model.unit.wagonWithHorses")){
                 int turnsLeft = unit.getTurnsLeft();
-                unit.setTurnsLeft(turnsLeft-1);
+                if (turnsLeft > 0) {
+                    unit.setTurnsLeft(turnsLeft - 1);
+                } else {
+                    Tile tile = unit.getTile();
+                    showInformationPanel(unit.getTile(), StringTemplate.template("info.noTurnsLeft")
+                            .add("%tile%", Messages.message(tile.getLabel()))
+                            .addAmount("%x%", tile.getX())
+                            .addAmount("%y%", tile.getY()));
+                    unit.dispose();
+                }
             }
         }
 

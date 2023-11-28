@@ -4861,8 +4861,7 @@ public class Unit extends GoodsLocation
 
         movesLeft = xr.getAttribute(MOVES_LEFT_TAG, 0);
 
-        turnsLeft = xr.getAttribute(TURNS_LEFT_TAG, 3);
-        System.out.println(xr.getAttribute(TURNS_LEFT_TAG, 0));
+        turnsLeft = xr.getAttribute(TURNS_LEFT_TAG, 40);
 
         workLeft = xr.getAttribute(WORK_LEFT_TAG, 0);
 
