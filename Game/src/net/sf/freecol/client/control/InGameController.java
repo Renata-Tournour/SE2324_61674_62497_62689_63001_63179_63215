@@ -1082,12 +1082,23 @@ public final class InGameController extends FreeColClientHolder {
                 int turnsLeft = unit.getTurnsLeft();
                 if (turnsLeft > 0) {
                     unit.setTurnsLeft(turnsLeft - 1);
-                } else {
+
+                }
+                else {
                     Tile tile = unit.getTile();
+                    List <Goods> goods = unit.getCompactGoodsList();
+                    String lostGoods = " ";
+                    if(!goods.isEmpty()){
+                        for(Goods g: goods)
+                            lostGoods += "\n - " + Messages.message(g.getNameKey()) + " ("+g.getAmount()+")";
+                    } else {
+                        lostGoods += "Zero goods!";
+                    }
                     showInformationPanel(unit.getTile(), StringTemplate.template("info.noTurnsLeft")
                             .add("%tile%", Messages.message(tile.getLabel()))
                             .addAmount("%x%", tile.getX())
-                            .addAmount("%y%", tile.getY()));
+                            .addAmount("%y%", tile.getY())
+                            .add("%goods%", lostGoods));
                     unit.dispose();
                 }
             }
