@@ -37,70 +37,17 @@ import java.util.stream.Collectors;
 import net.sf.freecol.FreeCol;
 import net.sf.freecol.common.debug.FreeColDebugger;
 import net.sf.freecol.common.i18n.Messages;
-import net.sf.freecol.common.model.Ability;
-import net.sf.freecol.common.model.AbstractGoods;
-import net.sf.freecol.common.model.AbstractUnit;
-import net.sf.freecol.common.model.BuildableType;
-import net.sf.freecol.common.model.Colony;
+import net.sf.freecol.common.model.*;
 import net.sf.freecol.common.model.CombatModel.CombatEffectType;
 import net.sf.freecol.common.model.Constants.IndianDemandAction;
-import net.sf.freecol.common.model.DiplomaticTrade;
 import net.sf.freecol.common.model.DiplomaticTrade.TradeStatus;
-import net.sf.freecol.common.model.Disaster;
-import net.sf.freecol.common.model.Europe;
 import net.sf.freecol.common.model.Europe.MigrationType;
-import net.sf.freecol.common.model.ExportData;
-import net.sf.freecol.common.model.FoundingFather;
-import net.sf.freecol.common.model.Force;
-import net.sf.freecol.common.model.FreeColGameObject;
-import net.sf.freecol.common.model.FreeColObject;
-import net.sf.freecol.common.model.Game;
-import net.sf.freecol.common.model.Goods;
-import net.sf.freecol.common.model.GoodsContainer;
-import net.sf.freecol.common.model.GoodsLocation;
-import net.sf.freecol.common.model.GoodsType;
-import net.sf.freecol.common.model.HighScore;
-import net.sf.freecol.common.model.HighSeas;
-import net.sf.freecol.common.model.HistoryEvent;
-import net.sf.freecol.common.model.IndianNationType;
-import net.sf.freecol.common.model.IndianSettlement;
-import net.sf.freecol.common.model.Location;
-import net.sf.freecol.common.model.Map;
-import net.sf.freecol.common.model.Market;
 import net.sf.freecol.common.model.Market.Access;
-import net.sf.freecol.common.model.ModelMessage;
 import net.sf.freecol.common.model.ModelMessage.MessageType;
-import net.sf.freecol.common.model.Monarch;
 import net.sf.freecol.common.model.Monarch.MonarchAction;
-import net.sf.freecol.common.model.Nameable;
-import net.sf.freecol.common.model.Nation;
-import net.sf.freecol.common.model.NationSummary;
-import net.sf.freecol.common.model.NativeTrade;
-import net.sf.freecol.common.model.NativeTradeItem;
 import net.sf.freecol.common.model.NativeTrade.NativeTradeAction;
-import net.sf.freecol.common.model.Player;
 import net.sf.freecol.common.model.Player.PlayerType;
-import net.sf.freecol.common.model.Stance;
-import net.sf.freecol.common.model.RandomRange;
-import net.sf.freecol.common.model.Region;
-import net.sf.freecol.common.model.Role;
-import net.sf.freecol.common.model.Settlement;
-import net.sf.freecol.common.model.Specification;
-import net.sf.freecol.common.model.StringTemplate;
-import net.sf.freecol.common.model.Tension;
-import net.sf.freecol.common.model.Tile;
-import net.sf.freecol.common.model.TileImprovement;
-import net.sf.freecol.common.model.TileImprovementType;
-import net.sf.freecol.common.model.TradeRoute;
-import net.sf.freecol.common.model.TradeRouteStop;
-import net.sf.freecol.common.model.Turn;
-import net.sf.freecol.common.model.Unit;
-import net.sf.freecol.common.model.UnitChangeType;
-import net.sf.freecol.common.model.UnitTypeChange;
 import net.sf.freecol.common.model.Unit.UnitState;
-import net.sf.freecol.common.model.UnitLocation;
-import net.sf.freecol.common.model.UnitType;
-import net.sf.freecol.common.model.WorkLocation;
 import net.sf.freecol.common.option.GameOptions;
 import net.sf.freecol.common.networking.ChangeSet;
 import net.sf.freecol.common.networking.ChangeSet.See;
@@ -157,13 +104,24 @@ public final class InGameController extends Controller {
     /** The server random number source. */
     private Random random;
 
-    private int timeToChange = 0;
+    /**
+     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Minimum amount of time the player can have the volcano benefits, then it changes to mountains
+     */
+    private static final int VOLCANO_MIN_LIFESPAN = 10;
 
     /**
      * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
-     * map of volcanos tiles and the turn where they were explored by a non AI player
+     * Maximum amount of time the player can have the volcano benefits, then it changes to mountains
      */
-    private java.util.Map<Tile, Turn> unchangedVolcanos = new HashMap<>();
+    private static final int VOLCANO_MAX_LIFESPAN = 40;
+
+    /**
+     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * map of volcanos tiles and the turn number which corresponds to when they will be transformed
+     * into a mountain, based on the turn number when they were first explored by a non AI player
+     */
+    private java.util.Map<Tile, Integer> unchangedVolcanos = new HashMap<>();
 
     /** Debug helpers, do not serialize. */
     private int debugOnlyAITurns = 0;
@@ -2046,37 +2004,43 @@ public final class InGameController extends Controller {
         final ServerGame serverGame = getGame();
         Map map = serverGame.getMap();
         List<Tile> volcanoTiles = map.getTileList(t -> t.getType().getId().equals("model.tile.volcano"));
-        java.util.Map<Tile, Turn> volcanoTilesExplored = new HashMap<>();
+        java.util.Map<Tile, Integer> volcanoTilesExplored = new HashMap<>();
 
         for (Tile v : volcanoTiles) {
             //System.out.println("todos: x = " + v.getX() + "; y = " + v.getY());
             java.util.Map<Player, Tile> exploredTiles = v.getCachedTiles();
             for (java.util.Map.Entry<Player, Tile> entry : exploredTiles.entrySet()) {
-                if(!entry.getKey().isAI() && !volcanoTilesExplored.containsKey(entry.getValue()))
-                    volcanoTilesExplored.put(entry.getValue(), serverGame.getTurn());
+                if(!entry.getKey().isAI() && !volcanoTilesExplored.containsKey(entry.getValue())) {
+                    volcanoTilesExplored.put(entry.getValue(), serverGame.getTurn().getNumber() +
+                            getRandomNumberInRange(VOLCANO_MIN_LIFESPAN, VOLCANO_MAX_LIFESPAN));
+                }
             }
         }
-        for (Entry<Tile, Turn> entry : volcanoTilesExplored.entrySet()) {
+        for (Entry<Tile, Integer> entry : volcanoTilesExplored.entrySet()) {
             if (!unchangedVolcanos.containsKey(entry.getKey()))
                 unchangedVolcanos.put(entry.getKey(), entry.getValue());
         }
     }
 
-    /*private void getTimeToChange(){
-        int nVolcanos = unchangedVolcanos.size();
-        final Game game = getGame();
-        int currentTurn = game.getTurn().getNumber();
-        // we would like to keep at least one volcano in the map (so you can see it)
-        // and to show our feature the other ones will eventually become a mountain
-        if(nVolcanos > 1){
-            if(currentTurn == timeToChange) {
-                int num = getRandomNumberInRange(0, nVolcanos);
-                //unchangedVolcanos.get(num).changeToMountain();
-                unchangedVolcanos.remove(num);
-                timeToChange += getRandomNumberInRange(5, 10);
+    /**
+     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Transforms a volcano tile in a mountain tile when it's its time to change
+     */
+    private void transformVolcanosInMountains(){
+        final Game serverGame = getGame();
+        Map map = serverGame.getMap();
+        final Specification spec = serverGame.getSpecification();
+        int currentTurn = serverGame.getTurn().getNumber();
+        for (Entry<Tile, Integer> entry : unchangedVolcanos.entrySet()) {
+            if (entry.getValue() == currentTurn) {
+                Tile tileToChange = entry.getKey();
+                tileToChange.changeType(spec.getTileType("model.tile.mountains"));
+                unchangedVolcanos.remove(entry.getKey(), entry.getValue());
+
+                // TODO put a message on the screen when the volcano changes
             }
         }
-    }*/
+    }
 
     /**
      * Ends the turn of the given player.
@@ -2106,10 +2070,7 @@ public final class InGameController extends Controller {
 
             // Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
             getExploredVolcanosByNonAIPlayers();
-            /*for (java.util.Map.Entry<Tile, Turn> entry : unchangedVolcanos.entrySet()) {
-                System.out.println("descobertos: x = " + entry.getKey().getX() + "; y = " +
-                                    entry.getKey().getY() + "; turn = " + entry.getValue().getNumber());
-            }*/
+            transformVolcanosInMountains();
 
             // Check for new turn
             if (serverGame.isNextPlayerInNewTurn()) {
