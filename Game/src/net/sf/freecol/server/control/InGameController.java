@@ -2062,6 +2062,20 @@ public final class InGameController extends Controller {
                     : current.getName()) + "'s!");
         }
 
+        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+        for(Unit unit: current.getUnitSet()){
+            if(unit.isWagonTrain()){
+                int turnsLeft = unit.getTurnsLeft();
+                if (turnsLeft > 0) {
+                    unit.setTurnsLeft(turnsLeft - 1);
+                }
+                else {
+                    unit.dispose();
+                }
+            }
+        }
+        // Ends here.
+
         ChangeSet cs = new ChangeSet();
         for (;;) {
             current.csEndTurn(cs);
@@ -2734,7 +2748,8 @@ public final class InGameController extends Controller {
                     "movesLeft", String.valueOf(dst.getMovesLeft()));
             }
         }
-        if(!carrier.isNaval() && goodsType.isBreedable()){
+        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+        if(carrier.isWagonTrain() && goodsType.isBreedable()){
             UnitType wagonWithHorses = this.getFreeColServer().getSpecification().getUnitType("model.unit.wagonWithHorses");
             carrier.setType(wagonWithHorses);
             cs.add(See.only(serverPlayer),carrier);
@@ -3896,7 +3911,8 @@ public final class InGameController extends Controller {
             // Others might see a capacity change.
             getGame().sendToOthers(serverPlayer, cs);
         }
-        if(!carrier.isNaval() && goodsType.isBreedable()){
+        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+        if(carrier.isWagonTrain() && goodsType.isBreedable()){
             UnitType wagonTrain = this.getFreeColServer().getSpecification().getUnitType("model.unit.wagonTrain");
             carrier.setType(wagonTrain);
             cs.add(See.only(serverPlayer),carrier);

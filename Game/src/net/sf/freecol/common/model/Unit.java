@@ -317,11 +317,11 @@ public class Unit extends GoodsLocation
     protected int visibleGoodsCount;
 
     /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
      * The amount of turns this unit has left.
      * When it reaches zero, the unit must disappear from the map.
      */
     protected int turnsLeft;
-
 
     /**
      * Constructor for ServerUnit.
@@ -636,6 +636,16 @@ public class Unit extends GoodsLocation
      */
     public boolean isNaval() {
         return (this.type == null) ? false : this.type.isNaval();
+    }
+
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * Checks if this {@code Unit} is a Wagon Train.
+     * @return True if this is a Wagon Train {@code Unit} with or without horses.
+     */
+    public boolean isWagonTrain(){
+        return this.type != null && (this.type.getId().equals("model.unit.wagonTrain") ||
+                this.type.getId().equals("model.unit.wagonWithHorses"));
     }
 
     /**
@@ -1195,6 +1205,7 @@ public class Unit extends GoodsLocation
     }
 
     /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
      * Get the number of turns @code Unit} has before it disappear.
      * @return The number of turns this @code Unit} has left.
      */
@@ -1203,6 +1214,7 @@ public class Unit extends GoodsLocation
     }
 
     /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
      * Set the number of turns left of this @code Unit}
      * @param num The new number of turns left.
      */
@@ -3598,8 +3610,26 @@ public class Unit extends GoodsLocation
      *
      * @return The total space.
      */
+
     public int getCargoCapacity() {
-        return this.type.getSpace();
+        if(this.turnsLeft <= 20)
+            return this.type.getSpace() - 1;
+        else
+            return this.type.getSpace();
+    }
+
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * Gets the goods at one of the slots.
+     * @return the Goods at last slot or null if the unit doesn't carrie goods.
+     */
+    public Goods getLastHoldGoods(){
+        List<Goods> goods = this.getGoodsList();
+        if(goods.isEmpty())
+            return null;
+        else
+            return goods.get(this.getCargoCapacity()-1);
+
     }
 
     /**
@@ -4672,7 +4702,7 @@ public class Unit extends GoodsLocation
         this.treasureAmount = o.getTreasureAmount();
         this.attrition = o.getAttrition();
         this.visibleGoodsCount = o.getVisibleGoodsCount();
-        //this.turnsLeft = o.getTurnsLeft();
+        this.turnsLeft = o.getTurnsLeft();
 
         this.owner.addUnit(this);
         return true;

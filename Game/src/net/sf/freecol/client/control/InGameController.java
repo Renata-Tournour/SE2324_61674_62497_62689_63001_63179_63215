@@ -1076,13 +1076,24 @@ public final class InGameController extends FreeColClientHolder {
 
         changeView(null);
 
+        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
         for(Unit unit: player.getUnitSet()){
-            if(unit.getType().getId().equals("model.unit.wagonTrain") ||
-                    unit.getType().getId().equals("model.unit.wagonWithHorses")){
+            if(unit.isWagonTrain()){
                 int turnsLeft = unit.getTurnsLeft();
                 if (turnsLeft > 0) {
                     unit.setTurnsLeft(turnsLeft - 1);
-
+                    if(turnsLeft == 20){
+                        Goods goods = unit.getLastHoldGoods();
+                        String lostGoods = "";
+                        if(goods != null) {
+                            lostGoods += "Your Wagon Train lost " +
+                                    + goods.getAmount() +
+                                    " units of " + Messages.message(goods.getNameKey());
+                            this.askUnloadGoods(goods.getType(),goods.getAmount(), unit);
+                        }
+                        showInformationPanel(unit.getTile(), StringTemplate.template("info.holdLost")
+                                .add("%Lost goods%", lostGoods));
+                    }
                 }
                 else {
                     Tile tile = unit.getTile();
@@ -1103,6 +1114,7 @@ public final class InGameController extends FreeColClientHolder {
                 }
             }
         }
+        // Ends here.
 
         final List<Unit> units = transform(player.getUnits(), Unit::couldMove);
         units.stream().forEach(unit -> {
