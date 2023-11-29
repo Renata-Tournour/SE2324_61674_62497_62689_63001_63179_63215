@@ -2007,7 +2007,6 @@ public final class InGameController extends Controller {
         java.util.Map<Tile, Integer> volcanoTilesExplored = new HashMap<>();
 
         for (Tile v : volcanoTiles) {
-            //System.out.println("todos: x = " + v.getX() + "; y = " + v.getY());
             java.util.Map<Player, Tile> exploredTiles = v.getCachedTiles();
             for (java.util.Map.Entry<Player, Tile> entry : exploredTiles.entrySet()) {
                 if(!entry.getKey().isAI() && !volcanoTilesExplored.containsKey(entry.getValue())) {
@@ -2036,8 +2035,6 @@ public final class InGameController extends Controller {
                 Tile tileToChange = entry.getKey();
                 tileToChange.changeType(spec.getTileType("model.tile.mountains"));
                 unchangedVolcanos.remove(entry.getKey(), entry.getValue());
-
-                // TODO put a message on the screen when the volcano changes
             }
         }
     }

@@ -771,11 +771,14 @@
            altitude-minimum="27" altitude-maximum="30"/>
       <modifier id="model.modifier.defence" index="50"
                 type="percentage" value="175"/>
+      <production unattended="true">
+        <output goods-type="model.goods.ore" value="4"/>
+      </production>
       <production>
         <output goods-type="model.goods.ore" value="8"/>
       </production>
       <production>
-        <output goods-type="model.goods.silver" value="3"/>
+        <output goods-type="model.goods.silver" value="5"/>
       </production>
       <resource type="model.resource.silver" probability="100"/>
       <resource type="model.resource.minerals" probability="100"/>
