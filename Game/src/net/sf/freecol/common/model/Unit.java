@@ -3625,10 +3625,27 @@ public class Unit extends GoodsLocation
      */
     public Goods getLastHoldGoods(){
         List<Goods> goods = this.getGoodsList();
-        if(goods.isEmpty())
+        boolean hasHorses = false;
+        for(int i = 0; i< this.type.getSpace(); i++){
+            System.out.println(goods.get(i).getIdType());
+            if(!goods.get(i).getType().isBreedable() || hasHorses){
+                return goods.get(i);
+            }
+            else
+                hasHorses = true;
+        }
+        return null;
+        /*if(goods.isEmpty())
             return null;
         else
             return goods.get(this.getCargoCapacity()-1);
+
+        if(goods.get(0).getType().isBreedable()){
+            return goods.get(1);
+        }
+        else{
+            return goods.get(0);
+        }*/
 
     }
 
