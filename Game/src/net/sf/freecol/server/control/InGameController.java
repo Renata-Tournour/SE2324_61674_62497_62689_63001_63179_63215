@@ -2065,7 +2065,11 @@ public final class InGameController extends Controller {
                 int turnsLeft = unit.getTurnsLeft();
                 if (turnsLeft > 0) {
                     unit.setTurnsLeft(turnsLeft - 1);
-
+                    if(turnsLeft == 20) {
+                        Goods goods = unit.getLastHoldGoods();
+                        if (goods != null)
+                            this.unloadGoods(current,goods.getType(), goods.getAmount(),unit);
+                    }
                 }
                 else {
                     unit.dispose();
