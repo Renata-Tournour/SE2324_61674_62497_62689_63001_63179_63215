@@ -105,19 +105,19 @@ public final class InGameController extends Controller {
     private Random random;
 
     /**
-     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
      * Minimum amount of time the player can have the volcano benefits, then it changes to mountains
      */
     private static final int VOLCANO_MIN_LIFESPAN = 10;
 
     /**
-     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
      * Maximum amount of time the player can have the volcano benefits, then it changes to mountains
      */
     private static final int VOLCANO_MAX_LIFESPAN = 40;
 
     /**
-     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
      * map of volcanos tiles and the turn number which corresponds to when they will be transformed
      * into a mountain, based on the turn number when they were first explored by a non AI player
      */
@@ -1987,7 +1987,7 @@ public final class InGameController extends Controller {
     }
 
     /**
-     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
      * @param min - minimum amount in range
      * @param max - maximum amount in range
      * @return a random number in the given range
@@ -1997,7 +1997,7 @@ public final class InGameController extends Controller {
     }
 
     /**
-     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
      * @return the volcano tiles explored by a non AI player
      */
    private void getExploredVolcanosByNonAIPlayers() {
@@ -2022,7 +2022,7 @@ public final class InGameController extends Controller {
     }
 
     /**
-     * Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
      * Transforms a volcano tile in a mountain tile when it's its time to change
      */
     private void transformVolcanosInMountains(){
@@ -2084,7 +2084,7 @@ public final class InGameController extends Controller {
             logger.finest("Ending turn for " + current.getName());
             current.clearModelMessages();
 
-            // Projeto ES - Madalena Pl'acido (63001) e Renata Henriques (63215)
+            // Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
             getExploredVolcanosByNonAIPlayers();
             transformVolcanosInMountains();
 

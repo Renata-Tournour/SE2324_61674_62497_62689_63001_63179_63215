@@ -9,6 +9,7 @@ public class AllTests {
         TestSuite suite = new TestSuite("Test for net.sf.freecol.newFeatures");
         //$JUnit-BEGIN$
         suite.addTestSuite(WagonTest.class);
+        suite.addTestSuite(VolcanoTest.class);
         //$JUnit-END$
         return suite;
     }
