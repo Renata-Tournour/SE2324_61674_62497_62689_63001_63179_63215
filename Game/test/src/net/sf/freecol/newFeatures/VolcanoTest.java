@@ -78,4 +78,53 @@ public class VolcanoTest extends FreeColTestCase {
         assertFalse(testTile.canProduce(grain, colonistType));
     }
 
+    /**
+     * Test the production potential values for a volcano and a mountain
+     * */
+    public void testPotential() {
+
+        Game game = getGame();
+        // create a map with only volcanos
+        Map map = getTestMap(volcano);
+        game.changeMap(map);
+
+        assertNotNull(mountains);
+        assertNotNull(volcano);
+
+        // get the volcano tiles
+        List<Tile> volcanoTiles = map.getTileList(t -> t.getType().equals(volcano));
+
+        Tile testTile = volcanoTiles.get(0);
+        assertEquals(testTile.getType(), volcano);
+
+        //Potencial silver production Volcanos if the tile is attended and not
+        assertEquals(0, testTile.getPotentialProduction(silver, null));
+        assertEquals(5, testTile.getPotentialProduction(silver, colonistType));
+
+        //Potencial ore production Volcanos if the tile is attended and not
+        assertEquals(4, testTile.getPotentialProduction(ore, null));
+        assertEquals(8, testTile.getPotentialProduction(ore, colonistType));
+
+        //Potencial food production Volcanos if the tile is attended and not
+        assertEquals(0, testTile.getPotentialProduction(food, null));
+        assertEquals(0, testTile.getPotentialProduction(food, colonistType));
+
+        // change volcano to mountain
+        testTile.changeType(mountains);
+        assertEquals(testTile.getType(), mountains);
+
+        //Potencial silver production of Mountains if the tile is attended and not
+        assertEquals(0, testTile.getPotentialProduction(silver, null));
+        assertEquals(1, testTile.getPotentialProduction(silver, colonistType));
+
+        //Potencial ore production of Mountains if the tile is attended and not
+        assertEquals(0, testTile.getPotentialProduction(ore, null));
+        assertEquals(4, testTile.getPotentialProduction(ore, colonistType));
+
+        //Potencial food production of Mountains if the tile is attended and not
+        assertEquals(0, testTile.getPotentialProduction(food, null));
+        assertEquals(0, testTile.getPotentialProduction(food, colonistType));
+
+    }
+
 }
