@@ -2065,6 +2065,7 @@ public final class InGameController extends Controller {
                 int turnsLeft = unit.getTurnsLeft();
                 if (turnsLeft > 0) {
                     unit.setTurnsLeft(turnsLeft - 1);
+
                 }
                 else {
                     unit.dispose();
