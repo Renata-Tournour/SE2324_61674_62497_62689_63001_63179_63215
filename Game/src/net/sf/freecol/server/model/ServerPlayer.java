@@ -48,6 +48,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
@@ -59,6 +60,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
 import javax.xml.stream.XMLStreamException;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -68,55 +70,14 @@ import net.sf.freecol.common.FreeColException;
 import net.sf.freecol.common.debug.FreeColDebugger;
 import net.sf.freecol.common.i18n.Messages;
 import net.sf.freecol.common.i18n.NameCache;
-import net.sf.freecol.common.model.Ability;
-import net.sf.freecol.common.model.AbstractGoods;
-import net.sf.freecol.common.model.AbstractUnit;
-import net.sf.freecol.common.model.Building;
-import net.sf.freecol.common.model.BuildingType;
-import net.sf.freecol.common.model.Colony;
-import net.sf.freecol.common.model.CombatModel;
+import net.sf.freecol.common.model.*;
 import net.sf.freecol.common.model.CombatModel.CombatEffectType;
 import net.sf.freecol.common.model.CombatModel.CombatResult;
 import net.sf.freecol.common.model.Constants.IndianDemandAction;
-import net.sf.freecol.common.model.DiplomaticTrade;
 import net.sf.freecol.common.model.DiplomaticTrade.TradeStatus;
-import net.sf.freecol.common.model.Disaster;
-import net.sf.freecol.common.model.Effect;
-import net.sf.freecol.common.model.Europe;
 import net.sf.freecol.common.model.Europe.MigrationType;
-import net.sf.freecol.common.model.Event;
-import net.sf.freecol.common.model.Force;
-import net.sf.freecol.common.model.FoundingFather;
 import net.sf.freecol.common.model.FoundingFather.FoundingFatherType;
-import net.sf.freecol.common.model.FreeColGameObject;
-import net.sf.freecol.common.model.Game;
-import net.sf.freecol.common.model.Goods;
-import net.sf.freecol.common.model.GoodsContainer;
-import net.sf.freecol.common.model.GoodsType;
-import net.sf.freecol.common.model.HistoryEvent;
-import net.sf.freecol.common.model.IndianSettlement;
-import net.sf.freecol.common.model.Location;
-import net.sf.freecol.common.model.Market;
-import net.sf.freecol.common.model.ModelMessage;
 import net.sf.freecol.common.model.ModelMessage.MessageType;
-import net.sf.freecol.common.model.Modifier;
-import net.sf.freecol.common.model.Monarch;
-import net.sf.freecol.common.model.Nation;
-import net.sf.freecol.common.model.Player;
-import net.sf.freecol.common.model.Role;
-import net.sf.freecol.common.model.Settlement;
-import net.sf.freecol.common.model.Specification;
-import net.sf.freecol.common.model.Stance;
-import net.sf.freecol.common.model.StringTemplate;
-import net.sf.freecol.common.model.Tension;
-import net.sf.freecol.common.model.Tile;
-import net.sf.freecol.common.model.TradeRoute;
-import net.sf.freecol.common.model.Turn;
-import net.sf.freecol.common.model.Unit;
-import net.sf.freecol.common.model.UnitChangeType;
-import net.sf.freecol.common.model.UnitType;
-import net.sf.freecol.common.model.UnitTypeChange;
-import net.sf.freecol.common.model.WorkLocation;
 import net.sf.freecol.common.model.pathfinding.GoalDeciders;
 import net.sf.freecol.common.networking.ChangeSet;
 import net.sf.freecol.common.networking.ChangeSet.See;
@@ -1497,6 +1458,64 @@ public class ServerPlayer extends Player implements TurnTaker {
         }
     }
 
+     /**
+     * Pay upkeep on the player resources.
+     *
+     * @param random A pseudo-random number source.
+     * @param cs A {@code ChangeSet} to update.
+     */
+     /*
+     private void csPlagueEffect(Random random, ChangeSet cs, int probability) {
+         List<Colony> colonies = getColonyList();
+         int size = colonies.size();
+         if (size <= 0) return;
+         // Randomly select a colony to start with, then generate
+         // an appropriate disaster if possible, else continue with
+         // the next colony, wrapping around if necessary.
+
+         //int start = randomInt(logger, "select colony", random, size);
+         for (int i = 0; i < size; i++) {
+             //Colony colony = colonies.get((start + i) % size);
+             Colony colony = colonies.get(i);
+             if (!colony.getOwner().isAI()) {
+                 System.out.println(colony.getName());
+                 //        List<Effect> effects = new ArrayList<>();
+                 //       effects.add(RandomChoice.getWeightedRandom(logger,
+                 //               "Get effect of disaster", plague.getEffects(), random));
+                 //      Effect effect = effects.get(0);
+                 // ListIterator<ColonyTile> tiles = getTilesForEffect(colony).listIterator();
+                 int index = 0;
+                 while (index < getTilesForEffect(colony).size()) {
+
+                     ColonyTile tile = getTilesForEffect(colony).get(index);
+                     System.out.println(tile.getLabel());
+                     //while(tiles.hasNext())
+                     //{
+                     //ColonyTile tile = tiles.next();
+
+                     if (!tile.getProduction().isEmpty() && !tile.getProduction().contains("model.goods.ore")
+                             && !tile.getProduction().contains("model.resource.silver")) {
+                         //Specification spec = getSpecification();
+                         //Disaster plague = spec.getDisaster(Disaster.PLAGUE);
+                         //tile.getWorkTile().getType().addDisaster(plague, 100);
+                         System.out.println("O tile já foi escolhido");
+                         if (tile.getWorkTile().plagueEffect()) {
+                             System.out.println(tile.getIdType());
+                             System.out.println("Conseguio tudo");
+                             return;
+                         }
+                     }
+                     index++;
+                     System.out.println("index++ o anterior nao deu");
+                 }
+             }
+         }
+         }
+         */
+
+
+
+     //}
     /**
      * Check for natural disasters.
      *
@@ -1516,8 +1535,11 @@ public class ServerPlayer extends Player implements TurnTaker {
             int start = randomInt(logger, "select colony", random, size);
             for (int i = 0; i < size; i++) {
                 Colony colony = colonies.get((start + i) % size);
-                Disaster disaster = RandomChoice.getWeightedRandom(logger,
-                    "select disaster", colony.getDisasterChoices(), random);
+                System.out.println("aqui");
+                final Specification spec = getSpecification();
+                final Disaster disaster = spec.getDisaster(Disaster.WINTER_PLAGUE);
+                //Disaster disaster = new Disaster("model.disaster.plague", getSpecification());
+                System.out.println(disaster.getId());
                 List<ModelMessage> messages = csApplyDisaster(random,
                     colony, disaster, cs);
                 if (!messages.isEmpty()) {
@@ -1580,13 +1602,14 @@ public class ServerPlayer extends Player implements TurnTaker {
                 sb.append(' ').append(Messages.getName(effect.getObject()));
             }
         }
-        if (effects.isEmpty()) sb.append(" All avoided");
-        logger.fine(sb.toString());
 
+        if (effects.isEmpty()) sb.append(" All avoided");
+        System.out.println(effects.get(0).getId());
         boolean colonyDirty = false;
         List<ModelMessage> messages = new ArrayList<>();
         ModelMessage mm;
 outer:  for (Effect effect : effects) {
+            System.out.println(effect.getNameKey());
             mm = null;
             if (colony == null) {
                 forEach(effect.getModifiers(), modifier -> {
@@ -1602,88 +1625,102 @@ outer:  for (Effect effect : effects) {
             } else {
                 if (null != effect.getId()) {
                     switch (effect.getId()) {
-                    case Effect.LOSS_OF_MONEY:
-                        int plunder = Math.max(1, colony.getPlunder(null, random) / 5);
-                        modifyGold(-plunder);
-                        cs.addPartial(See.only(this), this,
-                            "gold", String.valueOf(this.getGold()));
-                        mm = new ModelMessage(MessageType.DISASTERS,
-                                              effect.getId(), this)
-                            .addAmount("%amount%", plunder);
-                        break;
-                    case Effect.LOSS_OF_BUILDING:
-                        Building building = getBuildingForEffect(colony, effect, random);
-                        if (building != null) {
-                            // Add message before damaging building
+                        case Effect.LOSS_OF_MONEY:
+                            int plunder = Math.max(1, colony.getPlunder(null, random) / 5);
+                            modifyGold(-plunder);
+                            cs.addPartial(See.only(this), this,
+                                    "gold", String.valueOf(this.getGold()));
                             mm = new ModelMessage(MessageType.DISASTERS,
-                                                  effect.getId(), colony)
-                                .addNamed("%building%", building.getType());
-                            csDamageBuilding(building, cs);
-                            colonyDirty = true;
-                        }
-                        break;
+                                    effect.getId(), this)
+                                    .addAmount("%amount%", plunder);
+                            break;
+                        case Effect.LOSS_OF_BUILDING:
+                            Building building = getBuildingForEffect(colony, effect, random);
+                            if (building != null) {
+                                // Add message before damaging building
+                                mm = new ModelMessage(MessageType.DISASTERS,
+                                        effect.getId(), colony)
+                                        .addNamed("%building%", building.getType());
+                                csDamageBuilding(building, cs);
+                                colonyDirty = true;
+                            }
+                            break;
                     case Effect.LOSS_OF_GOODS:
                         Goods goods = getRandomMember(logger, "select goods",
-                            colony.getLootableGoodsList(),
-                            random);
+                                colony.getLootableGoodsList(),
+                                random);
                         if (goods != null) {
                             goods.setAmount(Math.min(goods.getAmount() / 2, 50));
                             colony.removeGoods(goods);
                             mm = new ModelMessage(MessageType.DISASTERS,
-                                                  effect.getId(), colony)
-                                .addStringTemplate("%goods%", goods.getLabel(true));
+                                    effect.getId(), colony)
+                                    .addStringTemplate("%goods%", goods.getLabel(true));
                             colonyDirty = true;
                         }
                         break;
-                    case Effect.LOSS_OF_UNIT:
-                        {
-                            Unit unit = getUnitForEffect(colony, effect, random);
-                            if (unit != null) {
-                                if (colony.getUnitCount() == 1) {
-                                    messages.clear();
-                                    mm = new ModelMessage(MessageType.DISASTERS,
+                    case Effect.LOSS_OF_UNIT: {
+                        Unit unit = getUnitForEffect(colony, effect, random);
+                        if (unit != null) {
+                            if (colony.getUnitCount() == 1) {
+                                messages.clear();
+                                mm = new ModelMessage(MessageType.DISASTERS,
                                         "model.player.disaster.effect.colonyDestroyed",
                                         this)
                                         .addName("%colony%", colony.getName());
-                                    messages.add(mm);
-                                    csDisposeSettlement(colony, cs);
-                                    colonyDirty = false;
-                                    break outer; // No point proceeding
-                                }
-                                mm = new ModelMessage(MessageType.DISASTERS,
-                                                      effect.getId(), colony)
+                                messages.add(mm);
+                                csDisposeSettlement(colony, cs);
+                                colonyDirty = false;
+                                break outer; // No point proceeding
+                            }
+                            mm = new ModelMessage(MessageType.DISASTERS,
+                                    effect.getId(), colony)
                                     .addStringTemplate("%unit%",
-                                        unit.getLabel());
-                                ((ServerUnit)unit).csRemove(See.only(this),
+                                            unit.getLabel());
+                            ((ServerUnit) unit).csRemove(See.only(this),
                                     null, cs);//-vis: Safe, entirely within colony
-                                colonyDirty = true;
-                            }
-                            break;
+                            colonyDirty = true;
                         }
-                    case Effect.DAMAGED_UNIT:
-                        {
-                            Unit unit = getUnitForEffect(colony, effect, random);
-                            if (unit != null && unit.isNaval()) {
-                                Location repairLocation = unit.getRepairLocation();
-                                if (repairLocation == null) {
-                                    mm = new ModelMessage(MessageType.DISASTERS,
-                                                          effect.getId(),
-                                                          colony)
+                        break;
+                    }
+                    case Effect.DAMAGED_UNIT: {
+                        Unit unit = getUnitForEffect(colony, effect, random);
+                        if (unit != null && unit.isNaval()) {
+                            Location repairLocation = unit.getRepairLocation();
+                            if (repairLocation == null) {
+                                mm = new ModelMessage(MessageType.DISASTERS,
+                                        effect.getId(),
+                                        colony)
                                         .addStringTemplate("%unit%",
-                                            unit.getLabel());
-                                    csSinkShip(unit, null, cs);
-                                } else {
-                                    mm = new ModelMessage(MessageType.DISASTERS,
-                                                          effect.getId(),
-                                                          colony)
+                                                unit.getLabel());
+                                csSinkShip(unit, null, cs);
+                            } else {
+                                mm = new ModelMessage(MessageType.DISASTERS,
+                                        effect.getId(),
+                                        colony)
                                         .addStringTemplate("%unit%",
-                                            unit.getLabel());
-                                    csDamageShip(unit, repairLocation, cs);
-                                }
-                                colonyDirty = true;
+                                                unit.getLabel());
+                                csDamageShip(unit, repairLocation, cs);
                             }
-                            break;
+                            colonyDirty = true;
                         }
+                        break;
+                    }
+                    case Effect.WINTER_PLAGUE_EFFECT:
+                    {
+                        List<ColonyTile> tiles = getColonyTileForEffect(colony, effect, random);
+
+                        for (ColonyTile tile : tiles) {
+                            Specification spec = this.getSpecification();
+                            tile.getWorkTile().changeType(spec.getTileType("model.tile.arctic"));
+
+                        }
+
+                        mm = new ModelMessage(MessageType.DISASTERS,
+                                effect.getId(), colony);
+
+                        colonyDirty = true;
+                        break;
+                    }
                     default:
                         mm = new ModelMessage(MessageType.DISASTERS,
                                               effect.getId(), colony);
@@ -1696,7 +1733,7 @@ outer:  for (Effect effect : effects) {
                                 } else {
                                     cs.addModifier(this, colony, m, true);
                                 }
-                            });
+                        });
                         colonyDirty |= first(effect.getModifiers()) != null;
                         break;
                     }
@@ -1708,6 +1745,13 @@ outer:  for (Effect effect : effects) {
         return messages;
     }
 
+    private void csPlagueEffect(ColonyTile tile, ChangeSet cs){
+        if (tile.getWorkTile().plagueEffect())
+            System.out.println("funcionou no tile msm");
+        else
+            System.out.println("n funcionou no tile msm");
+
+    }
     private Building getBuildingForEffect(Colony colony,
                                           @SuppressWarnings("unused") Effect effect,
                                           Random random) {
@@ -1724,6 +1768,14 @@ outer:  for (Effect effect : effects) {
         return (units.isEmpty()) ? null
             : getRandomMember(logger, "Select unit for effect", units, random);
     }
+
+//*_*
+    private List<ColonyTile> getColonyTileForEffect(Colony colony, Effect effect, Random random) {
+        List<ColonyTile> tiles = transform(colony.getColonyTiles(),
+                u -> effect.appliesTo(u.getWorkTile().getType()));
+        return (tiles.isEmpty()) ? null : tiles;
+    }
+//
 
     /**
      * Propagate an European market trade to the other European markets.
@@ -4566,10 +4618,14 @@ outer:  for (Effect effect : effects) {
                 csPayUpkeep(random, cs);
             }
 
+
             int disaster = spec.getPercentage(GameOptions.NATURAL_DISASTERS);
             if (disaster > 0) {
+                //*_* AQUI
+                //csPlagueEffect(random, cs, disaster);
                 csNaturalDisasters(random, cs, disaster);
             }
+
 
             if (isRebel()
                 && interventionBells >= spec.getInteger(GameOptions.INTERVENTION_BELLS)) {

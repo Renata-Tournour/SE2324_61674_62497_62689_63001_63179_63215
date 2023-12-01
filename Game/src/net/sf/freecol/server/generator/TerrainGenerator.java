@@ -502,19 +502,12 @@ public class TerrainGenerator {
                         t.setType(mountains);
                         mountainRegion.addTile(t);
                         counter++;
-                    } else if (r < 6) {
+                    } else if (r < 7) {
                         final TileType hills = getRandomTileType(game, spec.getHillsTileTypeList(), map.getLatitude(t.getY()));
                         if (hills == null) {
                             continue;
                         }
                         t.setType(hills);
-                        mountainRegion.addTile(t);
-                    } else if (r < 7) {
-                        final TileType volcano = getRandomTileType(game, spec.getVolcanosTileTypeList(), map.getLatitude(t.getY()));
-                        if (volcano == null) {
-                            continue;
-                        }
-                        t.setType(volcano);
                         mountainRegion.addTile(t);
                     }
                 }

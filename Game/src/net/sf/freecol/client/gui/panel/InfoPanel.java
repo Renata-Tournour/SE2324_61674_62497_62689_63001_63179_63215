@@ -436,13 +436,6 @@ public final class InfoPanel extends FreeColPanel
         textLabel = new JLabel(text);
         textLabel.setFont(this.font);
         panel.add(textLabel);
-        if(unit.getType().getId().equals("model.unit.wagonTrain") ||
-                unit.getType().getId().equals("model.unit.wagonWithHorses")){
-            text = Messages.message("infoPanel.turnsLeft") + " " + unit.getTurnsLeft();
-            textLabel = new JLabel(text);
-            textLabel.setFont(this.font);
-            panel.add(textLabel);
-        }
         
         if (unit.isCarrier()) {
             List<JLabel> labels = new ArrayList<>();
