@@ -52,10 +52,6 @@ public class Resource extends TileItem {
     /** The amount of the resource present. */
     private int quantity;
 
-    //*_*
-    //private int plagueQuantity;
-    private int baseQuantity;
-    //
 
     /**
      * Creates a standard {@code Resource}-instance.
@@ -75,11 +71,6 @@ public class Resource extends TileItem {
         }
         this.type = type;
         this.quantity = quantity;
-
-        //*_*
-        //this.plagueQuantity = 0;
-        this.baseQuantity = quantity;
-        //
     }
 
     /**
@@ -141,24 +132,6 @@ public class Resource extends TileItem {
     public void setQuantity(int newQuantity) {
         quantity = newQuantity;
     }
-
-//*_*
-    public void thereIsPlague(boolean activePlague){
-        if ( activePlague ) {
-            setQuantity(0);
-            System.out.println(quantity);
-        }
-        else
-            this.quantity = baseQuantity;
-
-    }
-
-    public boolean hasPlague(){
-        if(this.quantity == 0)
-            return true;
-        return false;
-    }
-//
 
     /**
      * Get the best goods type to produce here.

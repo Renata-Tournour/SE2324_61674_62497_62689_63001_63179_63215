@@ -76,23 +76,17 @@ public final class Tile extends UnitLocation implements Named, Ownable {
 
     public static final String TAG = "tile";
 
-    /**
-     * Comparator to sort tiles by increasing distance from the edge.
-     */
+    /** Comparator to sort tiles by increasing distance from the edge. */
     public static final Comparator<Tile> edgeDistanceComparator
-            = Comparator.comparingInt(Tile::getEdgeDistance);
+        = Comparator.comparingInt(Tile::getEdgeDistance);
 
-    /**
-     * Comparator to find the smallest high seas count.
-     */
+    /** Comparator to find the smallest high seas count. */
     public static final Comparator<Tile> highSeasComparator
-            = Comparator.comparingInt(Tile::getHighSeasCount);
+        = Comparator.comparingInt(Tile::getHighSeasCount);
 
-    /**
-     * Predicate to identify ordinary sea tiles.
-     */
+    /** Predicate to identify ordinary sea tiles. */
     public static final Predicate<Tile> isSeaTile = t ->
-            !t.isLand() && t.getHighSeasCount() >= 0;
+        !t.isLand() && t.getHighSeasCount() >= 0;
 
     /**
      * Information that is internal to the native settlements, and only
@@ -100,14 +94,10 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     private static class IndianSettlementInternals {
 
-        /**
-         * The skill taught at the settlement.
-         */
+        /** The skill taught at the settlement. */
         public UnitType skill = null;
 
-        /**
-         * The goods the settlement is interested in.
-         */
+        /** The goods the settlement is interested in. */
         public List<GoodsType> wantedGoods = null;
 
 
@@ -123,7 +113,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
         /**
          * Set the internal values.
          *
-         * @param skill  The skill taught.
+         * @param skill The skill taught.
          * @param wanted The wanted goods.
          */
         public void setValues(UnitType skill, List<GoodsType> wanted) {
@@ -177,19 +167,13 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     private TileType type;
 
-    /**
-     * The tile coordinates in the enclosing map.
-     */
+    /** The tile coordinates in the enclosing map. */
     private int x, y;
 
-    /**
-     * The player that consider this tile to be their land.
-     */
+    /** The player that consider this tile to be their land. */
     private Player owner;
 
-    /**
-     * The settlement located on this tile, if any.
-     */
+    /** The settlement located on this tile, if any. */
     private Settlement settlement;
 
     /**
@@ -202,19 +186,13 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     private Settlement owningSettlement;
 
-    /**
-     * Stores all Improvements and Resources (if any).
-     */
+    /** Stores all Improvements and Resources (if any). */
     private TileItemContainer tileItemContainer;
 
-    /**
-     * The region this tile is in.
-     */
+    /** The region this tile is in. */
     private Region region;
 
-    /**
-     * The number of tiles to traverse to get to the high seas.
-     */
+    /** The number of tiles to traverse to get to the high seas. */
     private int highSeasCount = -1;
 
     /**
@@ -224,9 +202,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     private Boolean moveToEurope;
 
-    /**
-     * The style of this Tile, as determined by adjacent tiles.
-     */
+    /** The style of this Tile, as determined by adjacent tiles. */
     private int style;
 
     /**
@@ -236,7 +212,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      * those tiles in the absence of extra-geographic blockages like
      * settlements and other units.  Similarly for water tiles/naval
      * units.
-     * <p>
+     *
      * This is used to quickly scope out the sort of paths available
      * to a unit attempting to reach some destination.  It only needs
      * serialization from server to client, as it is set by the
@@ -244,9 +220,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     private int contiguity = -1;
 
-    /**
-     * A map of cached tiles for each European player, null in clients.
-     */
+    /** A map of cached tiles for each European player, null in clients. */
     private final java.util.Map<Player, Tile> cachedTiles;
 
     // Do not serialize below
@@ -290,7 +264,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      * {@link #readFromXML(FreeColXMLReader)}.
      *
      * @param game The enclosing {@code Game}.
-     * @param id   The object identifier.
+     * @param id The object identifier.
      */
     public Tile(Game game, String id) {
         super(game, id);
@@ -320,7 +294,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
 
     /**
      * Sets the type for this Tile.
-     * <p>
+     *
      * -til: Changes appearance.
      *
      * @param t The new {@code TileType} for this {@code Tile}.
@@ -387,7 +361,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      * Gets the settlement on this tile.
      *
      * @return The {@code Settlement} that is located on this
-     * {@code Tile}, or null if none is present.
+     *     {@code Tile}, or null if none is present.
      * @see #setSettlement
      */
     @Override
@@ -399,11 +373,11 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      * Put a settlement onto this tile.  A tile can only have one
      * settlement located on it.  The settlement will also become the
      * owner of this tile.
-     * <p>
+     *
      * -til: Changes appearance.
      *
      * @param settlement A {@code Settlement} to put on this
-     *                   {@code Tile}.
+     *     {@code Tile}.
      * @see #getSettlement
      */
     public void setSettlement(Settlement settlement) {
@@ -431,7 +405,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
 
     /**
      * Sets the settlement that owns this tile.
-     * <p>
+     *
      * -til: Changes appearance.
      *
      * @param owner The {@code Settlement} to own this {@code Tile}.
@@ -466,7 +440,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public List<TileItem> getCompleteItems() {
         return (tileItemContainer == null) ? Collections.<TileItem>emptyList()
-                : tileItemContainer.getCompleteItems();
+            : tileItemContainer.getCompleteItems();
     }
 
     /**
@@ -480,7 +454,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
 
     /**
      * Set the tile region.
-     * <p>
+     *
      * -til: Changes appearance.
      *
      * @param newRegion The new {@code Region} value.
@@ -547,7 +521,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      * Set the move-to-Europe state of the tile.
      *
      * @param moveToEurope The new move-to-Europe state for the
-     *                     {@code Tile}.
+     *     {@code Tile}.
      */
     public void setMoveToEurope(Boolean moveToEurope) {
         this.moveToEurope = moveToEurope;
@@ -560,8 +534,8 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public boolean isDirectlyHighSeasConnected() {
         return (moveToEurope != null) ? moveToEurope
-                : (type == null) ? false
-                : type.isDirectlyHighSeasConnected();
+            : (type == null) ? false
+            : type.isDirectlyHighSeasConnected();
     }
 
     /**
@@ -571,19 +545,18 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public boolean isRiverCorner() {
         List<Tile> tiles = transform(getSurroundingTiles(0, 1),
-                Tile::isOnRiver);
+                                     Tile::isOnRiver);
         switch (tiles.size()) {
-            case 0:
-            case 1:
-                return false;
-            case 2:
-                return tiles.get(0).isAdjacent(tiles.get(1));
-            case 3:
-                return tiles.get(0).isAdjacent(tiles.get(1))
-                        || tiles.get(1).isAdjacent(tiles.get(2))
-                        || tiles.get(2).isAdjacent(tiles.get(0));
-            default:
-                break;
+        case 0: case 1:
+            return false;
+        case 2:
+            return tiles.get(0).isAdjacent(tiles.get(1));
+        case 3:
+            return tiles.get(0).isAdjacent(tiles.get(1))
+                || tiles.get(1).isAdjacent(tiles.get(2))
+                || tiles.get(2).isAdjacent(tiles.get(0));
+        default:
+            break;
         }
         return true;
     }
@@ -597,7 +570,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
         final Map map = getMap();
         final int x = getX(), y = getY();
         return Math.min(Math.min(x, map.getWidth() - x),
-                Math.min(y, map.getHeight() - y));
+                        Math.min(y, map.getHeight() - y));
     }
 
     /**
@@ -611,7 +584,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
 
     /**
      * Set the tile style.
-     * <p>
+     *
      * -til: Changes appearance.
      *
      * @param newStyle The new style value.
@@ -657,8 +630,8 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public Set<Tile> getContiguityAdjacent(final int contiguity) {
         return transform(getSurroundingTiles(1, 1),
-                matchKey(contiguity, Tile::getContiguity),
-                Function.<Tile>identity(), Collectors.toSet());
+                         matchKey(contiguity, Tile::getContiguity),
+                         Function.<Tile>identity(), Collectors.toSet());
     }
 
     /**
@@ -668,9 +641,9 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public boolean isOnRiver() {
         final TileType greatRiver
-                = getSpecification().getTileType("model.tile.greatRiver");
+            = getSpecification().getTileType("model.tile.greatRiver");
         final TileType ocean
-                = getSpecification().getTileType("model.tile.ocean");
+            = getSpecification().getTileType("model.tile.ocean");
         boolean ret = getType() == greatRiver;
         for (Tile t : getSurroundingTiles(1)) {
             if (t.getType() == ocean) return false;
@@ -704,17 +677,17 @@ public final class Tile extends UnitLocation implements Named, Ownable {
             return !unit.isNaval(); // Can not swim
         }
     }
-
+       
     /**
      * Gets the {@code IndianSettlementInternals} for the given player.
      *
      * @param player The {@code Player} to query.
      * @return The {@code IndianSettlementInternals} for the given player,
-     * or null if none present.
+     *     or null if none present.
      */
     private IndianSettlementInternals getPlayerIndianSettlement(Player player) {
         return (playerIndianSettlements == null) ? null
-                : playerIndianSettlements.get(player);
+            : playerIndianSettlements.get(player);
     }
 
 
@@ -729,8 +702,8 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public List<TileImprovement> getTileImprovements() {
         return (tileItemContainer == null)
-                ? Collections.<TileImprovement>emptyList()
-                : tileItemContainer.getImprovements();
+            ? Collections.<TileImprovement>emptyList()
+            : tileItemContainer.getImprovements();
     }
 
     /**
@@ -740,8 +713,8 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public List<TileImprovement> getCompleteTileImprovements() {
         return (tileItemContainer == null)
-                ? Collections.<TileImprovement>emptyList()
-                : tileItemContainer.getCompleteImprovements();
+            ? Collections.<TileImprovement>emptyList()
+            : tileItemContainer.getCompleteImprovements();
     }
 
     /**
@@ -752,8 +725,8 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public boolean hasTileImprovement(TileImprovementType type) {
         return (type.isChangeType()) ? type.changeContainsTarget(getType())
-                : (tileItemContainer == null) ? false
-                : tileItemContainer.hasImprovement(type);
+            : (tileItemContainer == null) ? false
+            : tileItemContainer.hasImprovement(type);
     }
 
     /**
@@ -761,33 +734,33 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      *
      * @param type The {@code TileImprovementType} to look for.
      * @return The {@code TileImprovement} of the requested type found,
-     * or null if none.
+     *     or null if none.
      */
     public TileImprovement getTileImprovement(TileImprovementType type) {
         return (tileItemContainer == null) ? null
-                : tileItemContainer.getImprovement(type);
+            : tileItemContainer.getImprovement(type);
     }
 
     /**
      * Does this tile have a LCR?
      *
      * @return True if this {@code Tile} has a
-     * {@code LostCityRumour} on it.
+     *     {@code LostCityRumour} on it.
      */
     public boolean hasLostCityRumour() {
         return tileItemContainer != null
-                && tileItemContainer.getLostCityRumour() != null;
+            && tileItemContainer.getLostCityRumour() != null;
     }
 
     /**
      * Gets a lost city rumour on this tile.
      *
      * @return The {@code LostCityRumour} on this
-     * {@code Tile}, or null if none found.
+     *     {@code Tile}, or null if none found.
      */
     public LostCityRumour getLostCityRumour() {
         return (tileItemContainer == null) ? null
-                : tileItemContainer.getLostCityRumour();
+            : tileItemContainer.getLostCityRumour();
     }
 
     /**
@@ -797,43 +770,10 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      */
     public boolean hasResource() {
         return tileItemContainer != null
-                && tileItemContainer.getResource() != null;
+            && tileItemContainer.getResource() != null;
     }
 
-    //*_*
-    public boolean hasThisResource(Resource resource) {
-        return tileItemContainer != null
-                && tileItemContainer.hasThisResource(resource);
-    }
-
-    public boolean plagueEffect() {
-        System.out.println("O tile tem algum recurso?");
-        List<TileItem> itemsOfTile = this.tileItemContainer.getTileItems();
-        if (itemsOfTile.isEmpty()) {
-            System.out.println("Não");
-            return false;
-        } else {
-        /*    for (int i = 0; i< itemsOfTile.size(); i++) {
-                TileItem item = itemsOfTile.get(i);
-                System.out.println("entrei no for");
-                System.out.println("Sim, vamos efetuar a praga:");
-                System.out.println(item.getNameKey());
-                if (item instanceof Resource) {
-                    if (!this.getTileItemContainer().addPlagueEffect(item))
-                        return false;
-                }
-                else
-                    System.out.println("O item não é um recurso");
-            }
-            */
-            System.out.println("next tileItemsCont");
-            System.out.println(tileItemContainer);
-        }
-        System.out.println("Praga com sucesso");
-        return true;
-    }
-    //
-    /*
+    /**
      * Does this tile have a river?
      *
      * @return True if this is a river {@code Tile}.
@@ -1340,7 +1280,6 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      *
      * Used by the terrain generator.
      *
-     * @param mountains The mountain tile type.
      * @return True if this is a good potential elevated tile.
      */
     public boolean isGoodMountainTile() {
@@ -2003,7 +1942,7 @@ public final class Tile extends UnitLocation implements Named, Ownable {
      *
      * @return The map of cached tiles.
      */
-    private java.util.Map<Player, Tile> getCachedTiles() {
+    public java.util.Map<Player, Tile> getCachedTiles() {
         return this.cachedTiles;
     }
 

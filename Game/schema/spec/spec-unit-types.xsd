@@ -83,6 +83,7 @@
       <xs:attribute name="skill-taught" type="xs:string"/>
       <xs:attribute name="space" type="xs:nonNegativeInteger"/>
       <xs:attribute name="space-taken" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="turns-left" use="optional" type="xs:nonNegativeInteger"/>
 
       <!-- @compat 0.11.3: drop optional in due course -->
       <xs:attribute name="priority" use="optional" type="xs:nonNegativeInteger"/>

@@ -316,6 +316,12 @@ public class Unit extends GoodsLocation
      */
     protected int visibleGoodsCount;
 
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * The amount of turns this unit has left.
+     * When it reaches zero, the unit must disappear from the map.
+     */
+    protected int turnsLeft;
 
     /**
      * Constructor for ServerUnit.
@@ -630,6 +636,16 @@ public class Unit extends GoodsLocation
      */
     public boolean isNaval() {
         return (this.type == null) ? false : this.type.isNaval();
+    }
+
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * Checks if this {@code Unit} is a Wagon Train.
+     * @return True if this is a Wagon Train {@code Unit} with or without horses.
+     */
+    public boolean isWagonTrain(){
+        return this.type != null && (this.type.getId().equals("model.unit.wagonTrain") ||
+                this.type.getId().equals("model.unit.wagonWithHorses"));
     }
 
     /**
@@ -1186,6 +1202,25 @@ public class Unit extends GoodsLocation
     @Override
     public int getMovesLeft() {
         return movesLeft;
+    }
+
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * Get the number of turns @code Unit} has before it disappear.
+     * @return The number of turns this @code Unit} has left.
+     */
+    public int getTurnsLeft(){
+        return this.turnsLeft;
+    }
+
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * Set the number of turns left of this @code Unit}
+     * @param num The new number of turns left.
+     */
+    public void setTurnsLeft(int num){
+
+        this.turnsLeft = num;
     }
 
     /**
@@ -3575,8 +3610,43 @@ public class Unit extends GoodsLocation
      *
      * @return The total space.
      */
+
     public int getCargoCapacity() {
-        return this.type.getSpace();
+        if(this.turnsLeft <= 20)
+            return this.type.getSpace() - 1;
+        else
+            return this.type.getSpace();
+    }
+
+    /**
+     * Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+     * Gets the goods at one of the slots.
+     * @return the Goods at last slot or null if the unit doesn't carrie goods.
+     */
+    public Goods getLastHoldGoods(){
+        List<Goods> goods = this.getGoodsList();
+        boolean hasHorses = false;
+        for(int i = 0; i< this.type.getSpace(); i++){
+            System.out.println(goods.get(i).getIdType());
+            if(!goods.get(i).getType().isBreedable() || hasHorses){
+                return goods.get(i);
+            }
+            else
+                hasHorses = true;
+        }
+        return null;
+        /*if(goods.isEmpty())
+            return null;
+        else
+            return goods.get(this.getCargoCapacity()-1);
+
+        if(goods.get(0).getType().isBreedable()){
+            return goods.get(1);
+        }
+        else{
+            return goods.get(0);
+        }*/
+
     }
 
     /**
@@ -4649,6 +4719,7 @@ public class Unit extends GoodsLocation
         this.treasureAmount = o.getTreasureAmount();
         this.attrition = o.getAttrition();
         this.visibleGoodsCount = o.getVisibleGoodsCount();
+        this.turnsLeft = o.getTurnsLeft();
 
         this.owner.addUnit(this);
         return true;
@@ -4691,6 +4762,8 @@ public class Unit extends GoodsLocation
     private static final String UNIT_TYPE_TAG = "unitType";
     private static final String VISIBLE_GOODS_COUNT_TAG = "visibleGoodsCount";
     private static final String WORK_LEFT_TAG = "workLeft";
+
+    private static final String TURNS_LEFT_TAG = "turns-left";
     private static final String WORK_TYPE_TAG = "workType";
     // @compat 0.11.0
     private static final String OLD_EQUIPMENT_TAG = "equipment";
@@ -4712,6 +4785,8 @@ public class Unit extends GoodsLocation
         xw.writeAttribute(UNIT_TYPE_TAG, this.type);
 
         xw.writeAttribute(MOVES_LEFT_TAG, movesLeft);
+
+        xw.writeAttribute(TURNS_LEFT_TAG, turnsLeft);
 
         xw.writeAttribute(STATE_TAG, state);
 
@@ -4832,6 +4907,8 @@ public class Unit extends GoodsLocation
                                                 true);
 
         movesLeft = xr.getAttribute(MOVES_LEFT_TAG, 0);
+
+        turnsLeft = xr.getAttribute(TURNS_LEFT_TAG, 40);
 
         workLeft = xr.getAttribute(WORK_LEFT_TAG, 0);
 
