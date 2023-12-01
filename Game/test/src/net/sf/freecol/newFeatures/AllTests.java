@@ -10,6 +10,7 @@ public class AllTests {
         //$JUnit-BEGIN$
         suite.addTestSuite(WagonTest.class);
         suite.addTestSuite(VolcanoTest.class);
+        suite.addTestSuite(WinterPlagueTest.class);
         //$JUnit-END$
         return suite;
     }
