@@ -1476,7 +1476,7 @@ public class ServerPlayer extends Player implements TurnTaker {
             for (int i = 0; i < size; i++) {
                 Colony colony = colonies.get((start + i) % size);
                 Disaster disaster = RandomChoice.getWeightedRandom(logger,
-                    "select disaster", colony.getDisasterChoices(), random);
+                   "select disaster", colony.getDisasterChoices(), random);
                 List<ModelMessage> messages = csApplyDisaster(random,
                     colony, disaster, cs);
                 if (!messages.isEmpty()) {
