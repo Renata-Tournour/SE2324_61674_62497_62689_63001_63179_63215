@@ -16,4 +16,5 @@ Include some methods that client class calls from FreeColServer that accesses ot
 
 Reviewer's name:Joana Monteiro
 Subject in review: Memento Pattern
-Review: 
+Review: Identifies the facade pattern well. 
+        Also, the class diagram is well presented
