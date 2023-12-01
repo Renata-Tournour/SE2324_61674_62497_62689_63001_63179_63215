@@ -1,3 +1,8 @@
 Created and updated mergeddoc.
 Added team member 4's code metric, design patterns, code smells and use case diagrams.
 Added the use case diagram for the volcano and its user story.
+
+Beatriz Rosas:
+Added my code metric, design patterns, code smells and use case diagrams.
+Also added use case diagram for the wagon train management and its user story.
+Added "Conclusions" to the index: don't forget to write there.
