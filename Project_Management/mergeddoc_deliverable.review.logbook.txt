@@ -30,6 +30,11 @@ Reviewer's Name: Catarina Pedroso
 Subject in review: Complexity metrics
 Review: Explains the metrics, indicating the different levels and an individual explanations for each parameter. Could explain a little better each parameter.
 
+Reviewer's name: Catarina Costa
+Subject in review: Dependency metrics
+Review: The document explains every parameter clearly and gives the worst example for each one. 
+Explains well the impact of the metric on the whole project, its implications, and how that could lead to the existence of the inappropriate intimacy code smell.
+
 ## Design Patterns Reviews: ---------------------------------------------------------------------------------------------------------
 
 Reviewer's name: Joana Monteiro
@@ -70,6 +75,19 @@ Show the class that interact with FreeColServer at Client level (the main class)
 Include some methods that client class calls from FreeColServer that accesses other classes
 (to ilustrate better the wrapper functionality of FreeColServer facade).
 
+Reviewer's name: Madalena Plácido
+Subject in review: Template
+Review: I think the code snippet of the class "Number" was cut slighly more than it should have. It just missed the getCategory method in the abstract class.
+Update: The report now portraits the patterns structure well
+
+Reviewer's name: Renata Henriques
+Subject in review: Memento
+Review: The pattern is well explained, could have shown more parts of the code snippet.
+
+Reviewer's name: Catarina Costa
+Subject in review: Factory Method
+Review: Gives a good explanation and shows clearly how it is used in the project
+
 ## Code Smells Reviews: ---------------------------------------------------------------------------------------------------------
 
 Reviewer's name: Joana Monteiro
@@ -109,3 +127,17 @@ Review: Explains well why the Data Class smell was identified and gives a soluti
 Reviewer's name: Madalena Plácido
 Subject in review: Long Method
 Review: Identifies the long method accurately and suggests an effective way to solve the smell.
+
+Reviewer's name: Renata Henriques
+Subject in review: Long parameter list
+Review:  Explains well why it's a Long Parameter List (5 parameters), showed the code where it occurs,
+and provides a solution. Could have mentioned the number of parameters.
+
+Reviewer's name: Catarina Pedroso
+Subject in review: Message Chain
+Review: Explains well why the Data Class smell was identified and gives a solution.
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Long Method
+Review: Identifies the code smell correctly and gives a good solution.
+Maybe add the total number of lines of the method.
