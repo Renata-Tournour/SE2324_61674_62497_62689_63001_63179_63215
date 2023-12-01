@@ -26,6 +26,9 @@ Reviewer's Name: Madalena Plácido
 Subject in review: MOOD
 Review: Due to these metrics not being fully functional in the intelij plugin, this report will later be replaced with one from another metric. Nevertheless the report is very detailed about each metric and compares the results of the diferent metrics with the optimal intervals. Could have mentioned an example of code smell which could be identified with these metrics.
 
+Reviewer's Name: Catarina Pedroso
+Subject in review: Complexity metrics
+Review: Explains the metrics, indicating the different levels and an individual explanations for each parameter. Could explain a little better each parameter.
 
 ## Design Patterns Reviews: ---------------------------------------------------------------------------------------------------------
 
@@ -54,6 +57,18 @@ Reviewer's name: Joana Monteiro
 Subject in review: Template
 Review: The pattern is well explained and demonstrated not only from the code but also with the diagram.
 
+Reviewer's name: Catarina Pedroso
+Subject in review: Observer Pattern
+Review: It could include the classes where this observer is used to explain it better.
+        The class diagrms would also ilustrate it better.
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Facade Pattern
+Review: Identifies the facade pattern well.
+Add the diagrams class to ilustrate better the pattern.
+Show the class that interact with FreeColServer at Client level (the main class).
+Include some methods that client class calls from FreeColServer that accesses other classes
+(to ilustrate better the wrapper functionality of FreeColServer facade).
 
 ## Code Smells Reviews: ---------------------------------------------------------------------------------------------------------
 
@@ -81,3 +96,16 @@ Review: Identifies and explains the data class well and suggest an effective way
 Reviewer's name: Catarina Costa
 Subject in review: Data Clumps
 Review: Correctly identifies the code smell and gives an easy solution to the problem using code already implemented in the project.
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Speculative Generality
+Review: Identifies well the code smell.
+Gives a practical solution for get rid of it.
+
+Reviewer's name: Catarina Pedroso
+Subject in review: Data Class
+Review: Explains well why the Data Class smell was identified and gives a solution.
+
+Reviewer's name: Madalena Plácido
+Subject in review: Long Method
+Review: Identifies the long method accurately and suggests an effective way to solve the smell.
