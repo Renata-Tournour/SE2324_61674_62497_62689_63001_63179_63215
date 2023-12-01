@@ -7,6 +7,10 @@ import net.sf.freecol.server.model.ServerPlayer;
 import net.sf.freecol.server.model.ServerUnit;
 import net.sf.freecol.util.test.FreeColTestCase;
 
+/**
+ * Project ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
+ * Unit test class for the new extension to Wagon Train in the freecol game
+ */
 public class WagonTest extends FreeColTestCase {
 
     private static final UnitType wagonTrainType
@@ -32,6 +36,9 @@ public class WagonTest extends FreeColTestCase {
     private static final GoodsType lumberType
             = spec().getGoodsType("model.goods.lumber");
 
+    /*
+    Tests Wagon Types (Wagon Train and Wagon Train with Horses)
+     */
     public void testWagonType(){
         Game game = getStandardGame();
         Player english = game.getPlayerByNationId("model.nation.english");
@@ -62,6 +69,9 @@ public class WagonTest extends FreeColTestCase {
         assertEquals(40, wagonTrain.getTurnsLeft());
     }
 
+    /**
+     * Tests if a Wagon Train changes its type to a Wagon Train with Horses
+     */
     public void testWagonTypeChange(){
         Game game = ServerTestHelper.startServerGame(getTestMap());
         InGameController igc = ServerTestHelper.getInGameController();
@@ -94,7 +104,9 @@ public class WagonTest extends FreeColTestCase {
         assertEquals(wagonTrainType, wagonTrain.getType());
     }
 
-    // Case when we load two types of goods that aren't horses
+    /**
+     * Tests if the Wagon loses goods (case when we load two types of goods that aren't horses)
+     */
     public void testLoseGoods(){
         Game game = ServerTestHelper.startServerGame(getTestMap());
         ServerPlayer english = getServerPlayer(game, "model.nation.english");
@@ -122,8 +134,9 @@ public class WagonTest extends FreeColTestCase {
         assertEquals("Shouldn't lose lumber", 50, wagonTrain.getGoodsCount(lumberType));
     }
 
-
-    // Case when we load only horses to both holds
+    /**
+     * Tests if the Wagon loses goods (case when we load only horses to both holds)
+     */
     public void testWagonLosesHorses(){
         Game game = ServerTestHelper.startServerGame(getTestMap());
         ServerPlayer english = getServerPlayer(game, "model.nation.english");
@@ -151,7 +164,9 @@ public class WagonTest extends FreeColTestCase {
         assertEquals("Should lose 50 horses",100, wagonTrain.getGoodsCount(horsesType));
     }
 
-    // Case we load horses and another type of good into both holds
+    /**
+     * Tests if the Wagon loses goods (case we load horses and another type of good into both holds)
+     */
     public void testNotLoseHorses(){
         Game game = ServerTestHelper.startServerGame(getTestMap());
         ServerPlayer english = getServerPlayer(game, "model.nation.english");
@@ -172,6 +187,7 @@ public class WagonTest extends FreeColTestCase {
         assertEquals("Loaded cotton",0, wagonTrain.getSpaceLeft());
 
         // At half of max turns left, the wagon must lose a hold and the goods on it
+        // Should lose the goods that aren't horses
         wagonTrain.setTurnsLeft(20);
         assertEquals(20, wagonTrain.getTurnsLeft());
         game.setCurrentPlayer(english);
@@ -182,6 +198,9 @@ public class WagonTest extends FreeColTestCase {
         assertEquals("Shouldn't lose horses",50, wagonTrain.getGoodsCount(horsesType));
     }
 
+    /**
+     * Tests if a wagon disappears from the map when it reaches zero turns left
+     */
     public void testLostWagon(){
         Game game = ServerTestHelper.startServerGame(getTestMap());
         ServerPlayer english = getServerPlayer(game, "model.nation.english");
@@ -194,6 +213,7 @@ public class WagonTest extends FreeColTestCase {
         game.setCurrentPlayer(english);
         ServerTestHelper.getInGameController().endTurn(english);
         assertTrue(wagonTrain.isDisposed());
+
         assertTrue(wagonTrainWithHorses.isDisposed());
     }
 
