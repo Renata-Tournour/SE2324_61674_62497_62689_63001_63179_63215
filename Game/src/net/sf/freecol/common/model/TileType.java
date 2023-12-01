@@ -50,8 +50,6 @@ public final class TileType extends FreeColSpecObjectType
     public static final int HILLS_ALTITUDE = 15;
     public static final int MOUNTAINS_ALTITUDE = 25;
 
-    public static final int VOLCANOS_ALTITUDE = 28;
-
     /**
      * Use these tile types only for "land maps", i.e. maps that only
      * distinguish water and land.
@@ -211,14 +209,6 @@ public final class TileType extends FreeColSpecObjectType
     }
 
     /**
-     * Checks if this {@code TileType} should be considered a volcano when
-     * generating the map.
-     */
-    public boolean isVolcano() {
-        return altitude[0] <= VOLCANOS_ALTITUDE && altitude[1] >= VOLCANOS_ALTITUDE;
-    }
-
-    /**
      * Gets the basic work turns to build an improvement on this tile type.
      *
      * @return The basic work turns.
@@ -363,7 +353,7 @@ public final class TileType extends FreeColSpecObjectType
      * @param disaster The {@code Disaster} to add.
      * @param probability The probability of the disaster.
      */
-    private void addDisaster(Disaster disaster, int probability) {
+    public void addDisaster(Disaster disaster, int probability) {
         if (disasters == null) disasters = new ArrayList<>();
         disasters.add(new RandomChoice<>(disaster, probability));
     }

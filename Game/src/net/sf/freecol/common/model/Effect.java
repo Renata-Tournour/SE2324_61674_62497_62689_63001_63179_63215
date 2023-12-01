@@ -55,6 +55,9 @@ public class Effect extends FreeColSpecObjectType {
     public static final String LOSS_OF_BUILDING_PRODUCTION
         = "model.disaster.effect.lossOfBuildingProduction";
 
+    public static final String WINTER_PLAGUE_EFFECT
+        = "model.disaster.effect.winterPlagueEffect";
+
     /** The probability of this effect. */
     private int probability;
 

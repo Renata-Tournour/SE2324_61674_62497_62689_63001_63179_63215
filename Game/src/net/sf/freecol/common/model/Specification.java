@@ -285,7 +285,7 @@ public final class Specification implements OptionContainer {
         public String toString() {
             return getId();
         }
-    }
+    };
 
     public static final Source AMBUSH_BONUS_SOURCE
         = new Source("model.source.ambushBonus");
@@ -1767,10 +1767,6 @@ public final class Specification implements OptionContainer {
     
     public List<TileType> getMountainsTileTypeList() {
         return getTileTypeList().stream().filter(t -> t.isMountains()).collect(Collectors.toList());
-    }
-
-    public List<TileType> getVolcanosTileTypeList() {
-        return getTileTypeList().stream().filter(t -> t.isVolcano()).collect(Collectors.toList());
     }
 
     /**

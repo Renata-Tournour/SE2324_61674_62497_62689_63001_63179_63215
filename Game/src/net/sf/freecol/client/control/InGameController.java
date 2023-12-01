@@ -62,7 +62,12 @@ import net.sf.freecol.common.debug.FreeColDebugger;
 import net.sf.freecol.common.i18n.Messages;
 import net.sf.freecol.common.i18n.NameCache;
 import net.sf.freecol.common.io.FreeColDirectories;
-import net.sf.freecol.common.model.*;
+import net.sf.freecol.common.model.Ability;
+import net.sf.freecol.common.model.AbstractGoods;
+import net.sf.freecol.common.model.BuildableType;
+import net.sf.freecol.common.model.Building;
+import net.sf.freecol.common.model.Colony;
+import net.sf.freecol.common.model.ColonyWas;
 import net.sf.freecol.common.model.Constants.ArmedUnitSettlementAction;
 import net.sf.freecol.common.model.Constants.ClaimAction;
 import net.sf.freecol.common.model.Constants.IndianDemandAction;
@@ -72,15 +77,61 @@ import net.sf.freecol.common.model.Constants.ScoutIndianSettlementAction;
 import net.sf.freecol.common.model.Constants.TradeAction;
 import net.sf.freecol.common.model.Constants.TradeBuyAction;
 import net.sf.freecol.common.model.Constants.TradeSellAction;
+import net.sf.freecol.common.model.DiplomaticTrade;
 import net.sf.freecol.common.model.DiplomaticTrade.TradeContext;
 import net.sf.freecol.common.model.DiplomaticTrade.TradeStatus;
+import net.sf.freecol.common.model.Direction;
+import net.sf.freecol.common.model.Europe;
 import net.sf.freecol.common.model.Europe.MigrationType;
+import net.sf.freecol.common.model.EuropeWas;
+import net.sf.freecol.common.model.FoundingFather;
+import net.sf.freecol.common.model.FreeColGameObject;
+import net.sf.freecol.common.model.FreeColObject;
+import net.sf.freecol.common.model.Game;
 import net.sf.freecol.common.model.Game.LogoutReason;
+import net.sf.freecol.common.model.GoldTradeItem;
+import net.sf.freecol.common.model.Goods;
+import net.sf.freecol.common.model.GoodsType;
+import net.sf.freecol.common.model.HighScore;
+import net.sf.freecol.common.model.HistoryEvent;
+import net.sf.freecol.common.model.IndianSettlement;
+import net.sf.freecol.common.model.LastSale;
+import net.sf.freecol.common.model.Location;
+import net.sf.freecol.common.model.LostCityRumour;
+import net.sf.freecol.common.model.Map;
+import net.sf.freecol.common.model.MarketWas;
+import net.sf.freecol.common.model.ModelMessage;
 import net.sf.freecol.common.model.ModelMessage.MessageType;
+import net.sf.freecol.common.model.Modifier;
 import net.sf.freecol.common.model.Monarch.MonarchAction;
+import net.sf.freecol.common.model.Nameable;
+import net.sf.freecol.common.model.NationSummary;
+import net.sf.freecol.common.model.NativeTrade;
 import net.sf.freecol.common.model.NativeTrade.NativeTradeAction;
+import net.sf.freecol.common.model.NativeTradeItem;
+import net.sf.freecol.common.model.ObjectWas;
+import net.sf.freecol.common.model.Ownable;
+import net.sf.freecol.common.model.PathNode;
+import net.sf.freecol.common.model.Player;
 import net.sf.freecol.common.model.Player.NoClaimReason;
+import net.sf.freecol.common.model.Region;
+import net.sf.freecol.common.model.Role;
+import net.sf.freecol.common.model.Settlement;
+import net.sf.freecol.common.model.Stance;
+import net.sf.freecol.common.model.StringTemplate;
+import net.sf.freecol.common.model.Tile;
+import net.sf.freecol.common.model.TileImprovementType;
+import net.sf.freecol.common.model.TradeLocation;
+import net.sf.freecol.common.model.TradeRoute;
+import net.sf.freecol.common.model.TradeRouteStop;
+import net.sf.freecol.common.model.Turn;
+import net.sf.freecol.common.model.Unit;
 import net.sf.freecol.common.model.Unit.UnitState;
+import net.sf.freecol.common.model.UnitChangeType;
+import net.sf.freecol.common.model.UnitType;
+import net.sf.freecol.common.model.UnitTypeChange;
+import net.sf.freecol.common.model.UnitWas;
+import net.sf.freecol.common.model.WorkLocation;
 import net.sf.freecol.common.option.GameOptions;
 import net.sf.freecol.common.util.Introspector;
 import net.sf.freecol.common.util.LogBuilder;
@@ -1075,47 +1126,6 @@ public final class InGameController extends FreeColClientHolder {
         moveMode = moveMode.maximize(MoveMode.END_TURN);
 
         changeView(null);
-
-        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
-        for(Unit unit: player.getUnitSet()){
-            if(unit.isWagonTrain()){
-                int turnsLeft = unit.getTurnsLeft();
-                if (turnsLeft > 0) {
-                    unit.setTurnsLeft(turnsLeft - 1);
-                    if(turnsLeft == 20){
-                        Goods goods = unit.getLastHoldGoods();
-                        String lostGoods = "";
-                        if(goods != null) {
-                            lostGoods += "Your Wagon Train lost " +
-                                    + goods.getAmount() +
-                                    " units of " + Messages.message(goods.getNameKey());
-                            this.askUnloadGoods(goods.getType(),goods.getAmount(), unit);
-                        }
-                        showInformationPanel(unit.getTile(), StringTemplate.template("info.holdLost")
-                                .add("%Lost goods%", lostGoods));
-                    }
-                }
-                else {
-                    Tile tile = unit.getTile();
-                    List <Goods> goods = unit.getCompactGoodsList();
-                    String lostGoods = " ";
-                    if(!goods.isEmpty()){
-                        for(Goods g: goods)
-                            lostGoods += "\n - " + Messages.message(g.getNameKey()) + " ("+g.getAmount()+")";
-                    } else {
-                        lostGoods += "Zero goods!";
-                    }
-                    showInformationPanel(unit.getTile(), StringTemplate.template("info.noTurnsLeft")
-                            .add("%tile%", Messages.message(tile.getLabel()))
-                            .addAmount("%x%", tile.getX())
-                            .addAmount("%y%", tile.getY())
-                            .add("%goods%", lostGoods));
-                    unit.dispose();
-                }
-            }
-        }
-        // Ends here.
-
         final List<Unit> units = transform(player.getUnits(), Unit::couldMove);
         units.stream().forEach(unit -> {
             if (unit.getState() != Unit.UnitState.SKIPPED) {
@@ -3838,7 +3848,6 @@ public final class InGameController extends FreeColClientHolder {
         if (goods.getLocation() instanceof Europe) {
             return buyGoods(goods.getType(), goods.getAmount(), carrier);
         }
-
         UnitWas carrierWas = new UnitWas(carrier);
         UnitWas sourceWas = null;
         ColonyWas colonyWas = null;

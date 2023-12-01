@@ -37,17 +37,70 @@ import java.util.stream.Collectors;
 import net.sf.freecol.FreeCol;
 import net.sf.freecol.common.debug.FreeColDebugger;
 import net.sf.freecol.common.i18n.Messages;
-import net.sf.freecol.common.model.*;
+import net.sf.freecol.common.model.Ability;
+import net.sf.freecol.common.model.AbstractGoods;
+import net.sf.freecol.common.model.AbstractUnit;
+import net.sf.freecol.common.model.BuildableType;
+import net.sf.freecol.common.model.Colony;
 import net.sf.freecol.common.model.CombatModel.CombatEffectType;
 import net.sf.freecol.common.model.Constants.IndianDemandAction;
+import net.sf.freecol.common.model.DiplomaticTrade;
 import net.sf.freecol.common.model.DiplomaticTrade.TradeStatus;
+import net.sf.freecol.common.model.Disaster;
+import net.sf.freecol.common.model.Europe;
 import net.sf.freecol.common.model.Europe.MigrationType;
+import net.sf.freecol.common.model.ExportData;
+import net.sf.freecol.common.model.FoundingFather;
+import net.sf.freecol.common.model.Force;
+import net.sf.freecol.common.model.FreeColGameObject;
+import net.sf.freecol.common.model.FreeColObject;
+import net.sf.freecol.common.model.Game;
+import net.sf.freecol.common.model.Goods;
+import net.sf.freecol.common.model.GoodsContainer;
+import net.sf.freecol.common.model.GoodsLocation;
+import net.sf.freecol.common.model.GoodsType;
+import net.sf.freecol.common.model.HighScore;
+import net.sf.freecol.common.model.HighSeas;
+import net.sf.freecol.common.model.HistoryEvent;
+import net.sf.freecol.common.model.IndianNationType;
+import net.sf.freecol.common.model.IndianSettlement;
+import net.sf.freecol.common.model.Location;
+import net.sf.freecol.common.model.Map;
+import net.sf.freecol.common.model.Market;
 import net.sf.freecol.common.model.Market.Access;
+import net.sf.freecol.common.model.ModelMessage;
 import net.sf.freecol.common.model.ModelMessage.MessageType;
+import net.sf.freecol.common.model.Monarch;
 import net.sf.freecol.common.model.Monarch.MonarchAction;
+import net.sf.freecol.common.model.Nameable;
+import net.sf.freecol.common.model.Nation;
+import net.sf.freecol.common.model.NationSummary;
+import net.sf.freecol.common.model.NativeTrade;
+import net.sf.freecol.common.model.NativeTradeItem;
 import net.sf.freecol.common.model.NativeTrade.NativeTradeAction;
+import net.sf.freecol.common.model.Player;
 import net.sf.freecol.common.model.Player.PlayerType;
+import net.sf.freecol.common.model.Stance;
+import net.sf.freecol.common.model.RandomRange;
+import net.sf.freecol.common.model.Region;
+import net.sf.freecol.common.model.Role;
+import net.sf.freecol.common.model.Settlement;
+import net.sf.freecol.common.model.Specification;
+import net.sf.freecol.common.model.StringTemplate;
+import net.sf.freecol.common.model.Tension;
+import net.sf.freecol.common.model.Tile;
+import net.sf.freecol.common.model.TileImprovement;
+import net.sf.freecol.common.model.TileImprovementType;
+import net.sf.freecol.common.model.TradeRoute;
+import net.sf.freecol.common.model.TradeRouteStop;
+import net.sf.freecol.common.model.Turn;
+import net.sf.freecol.common.model.Unit;
+import net.sf.freecol.common.model.UnitChangeType;
+import net.sf.freecol.common.model.UnitTypeChange;
 import net.sf.freecol.common.model.Unit.UnitState;
+import net.sf.freecol.common.model.UnitLocation;
+import net.sf.freecol.common.model.UnitType;
+import net.sf.freecol.common.model.WorkLocation;
 import net.sf.freecol.common.option.GameOptions;
 import net.sf.freecol.common.networking.ChangeSet;
 import net.sf.freecol.common.networking.ChangeSet.See;
@@ -103,25 +156,6 @@ public final class InGameController extends Controller {
 
     /** The server random number source. */
     private Random random;
-
-    /**
-     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-     * Minimum amount of time the player can have the volcano benefits, then it changes to mountains
-     */
-    private static final int VOLCANO_MIN_LIFESPAN = 10;
-
-    /**
-     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-     * Maximum amount of time the player can have the volcano benefits, then it changes to mountains
-     */
-    private static final int VOLCANO_MAX_LIFESPAN = 40;
-
-    /**
-     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-     * map of volcanos tiles and the turn number which corresponds to when they will be transformed
-     * into a mountain, based on the turn number when they were first explored by a non AI player
-     */
-    private java.util.Map<Tile, Integer> unchangedVolcanos = new HashMap<>();
 
     /** Debug helpers, do not serialize. */
     private int debugOnlyAITurns = 0;
@@ -1986,58 +2020,6 @@ public final class InGameController extends Controller {
         return cs;
     }
 
-    /**
-     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-     * @param min - minimum amount in range
-     * @param max - maximum amount in range
-     * @return a random number in the given range
-     */
-    private int getRandomNumberInRange(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
-
-    /**
-     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-     * @return the volcano tiles explored by a non AI player
-     */
-   private void getExploredVolcanosByNonAIPlayers() {
-        final ServerGame serverGame = getGame();
-        Map map = serverGame.getMap();
-        List<Tile> volcanoTiles = map.getTileList(t -> t.getType().getId().equals("model.tile.volcano"));
-        java.util.Map<Tile, Integer> volcanoTilesExplored = new HashMap<>();
-
-        for (Tile v : volcanoTiles) {
-            java.util.Map<Player, Tile> exploredTiles = v.getCachedTiles();
-            for (java.util.Map.Entry<Player, Tile> entry : exploredTiles.entrySet()) {
-                if(!entry.getKey().isAI() && !volcanoTilesExplored.containsKey(entry.getValue())) {
-                    volcanoTilesExplored.put(entry.getValue(), serverGame.getTurn().getNumber() +
-                            getRandomNumberInRange(VOLCANO_MIN_LIFESPAN, VOLCANO_MAX_LIFESPAN));
-                }
-            }
-        }
-        for (Entry<Tile, Integer> entry : volcanoTilesExplored.entrySet()) {
-            if (!unchangedVolcanos.containsKey(entry.getKey()))
-                unchangedVolcanos.put(entry.getKey(), entry.getValue());
-        }
-    }
-
-    /**
-     * Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-     * Transforms a volcano tile in a mountain tile when it's its time to change
-     */
-    private void transformVolcanosInMountains(){
-        final Game serverGame = getGame();
-        Map map = serverGame.getMap();
-        final Specification spec = serverGame.getSpecification();
-        int currentTurn = serverGame.getTurn().getNumber();
-        for (Entry<Tile, Integer> entry : unchangedVolcanos.entrySet()) {
-            if (entry.getValue() == currentTurn) {
-                Tile tileToChange = entry.getKey();
-                tileToChange.changeType(spec.getTileType("model.tile.mountains"));
-                unchangedVolcanos.remove(entry.getKey(), entry.getValue());
-            }
-        }
-    }
 
     /**
      * Ends the turn of the given player.
@@ -2059,34 +2041,11 @@ public final class InGameController extends Controller {
                     : current.getName()) + "'s!");
         }
 
-        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
-        for(Unit unit: current.getUnitSet()){
-            if(unit.isWagonTrain()){
-                int turnsLeft = unit.getTurnsLeft();
-                if (turnsLeft > 0) {
-                    unit.setTurnsLeft(turnsLeft - 1);
-                    if(turnsLeft == 20) {
-                        Goods goods = unit.getLastHoldGoods();
-                        if (goods != null)
-                            this.unloadGoods(current,goods.getType(), goods.getAmount(),unit);
-                    }
-                }
-                else {
-                    unit.dispose();
-                }
-            }
-        }
-        // Ends here.
-
         ChangeSet cs = new ChangeSet();
         for (;;) {
             current.csEndTurn(cs);
             logger.finest("Ending turn for " + current.getName());
             current.clearModelMessages();
-
-            // Project ES - Madalena Pl'acido (63001) and Renata Henriques (63215)
-            getExploredVolcanosByNonAIPlayers();
-            transformVolcanosInMountains();
 
             // Check for new turn
             if (serverGame.isNextPlayerInNewTurn()) {
@@ -2750,12 +2709,7 @@ public final class InGameController extends Controller {
                     "movesLeft", String.valueOf(dst.getMovesLeft()));
             }
         }
-        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
-        if(carrier.isWagonTrain() && goodsType.isBreedable()){
-            UnitType wagonWithHorses = this.getFreeColServer().getSpecification().getUnitType("model.unit.wagonWithHorses");
-            carrier.setType(wagonWithHorses);
-            cs.add(See.only(serverPlayer),carrier);
-        }
+
         // Invisible in settlement
         return cs;
     }
@@ -3912,12 +3866,6 @@ public final class InGameController extends Controller {
             cs.add(See.perhaps(), (FreeColGameObject)carrier.getLocation());
             // Others might see a capacity change.
             getGame().sendToOthers(serverPlayer, cs);
-        }
-        // Projeto ES - Beatriz Rosas (63179) and Catarina Pedroso (61674)
-        if(carrier.isWagonTrain() && goodsType.isBreedable()){
-            UnitType wagonTrain = this.getFreeColServer().getSpecification().getUnitType("model.unit.wagonTrain");
-            carrier.setType(wagonTrain);
-            cs.add(See.only(serverPlayer),carrier);
         }
         return cs;
     }
