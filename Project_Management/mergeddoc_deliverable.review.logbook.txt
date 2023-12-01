@@ -1,0 +1,3 @@
+Created and updated mergeddoc.
+Added team member 4's code metric, design patterns, code smells and use case diagrams.
+Added the use case diagram for the volcano and its user story.
