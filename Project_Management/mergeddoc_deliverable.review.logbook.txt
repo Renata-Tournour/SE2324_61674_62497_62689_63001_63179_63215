@@ -24,6 +24,10 @@ Reviewer's name: Joana Monteiro
 Subject in review: Main Screen - Use Case Diagram
 Review:  The use case diagram is well done, but the descriptions of the use cases could be a bit more detailed
 
+Reviewer's name: Catarina Pedroso
+Subject in review: Use Case Combat
+Review: The diagram seems good, very detailed and the use cases descriptions are easy to understand
+
 ## Code Metrics Reviews: ---------------------------------------------------------------------------------------------------------
 
 Reviewer's Name: Renata Henriques
@@ -49,6 +53,12 @@ Subject in review: Lines Of Code Metric
 Review: Explains well what the metric is about.
 Mentions the impact of high number of lines- the code smell large class.
 Also, demonstrates the values of each metric.
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Martin Packaging Metric
+Review: Explains well each metric.
+Gives good examples from the Freecol code.
+Maybe some code smells that may be correlated with the metrics.
 
 ## Design Patterns Reviews: ---------------------------------------------------------------------------------------------------------
 
@@ -115,6 +125,19 @@ Review: The pattern is well identified and the code snippet ilustrates it well.
 Reviewer's name: Renata Henriques
 Subject in review: Memento (design pattern 12)
 Review: The pattern is well identified and explained.
+
+Reviewer's name: Beatriz Rosas
+Subject in review: Template Method Pattern
+Review: Identifies well the template method pattern and justify it very well.
+Maybe add those abstract methods to the class diagram.
+
+Reviewer's name: Catarina Costa
+Subject in review: Command Pattern
+Review: Provides a good explanation of the design pattern and relates it well with the project, showing a diagram representing the pattern and code snippets of the classes.
+
+Reviewer's name: Madalena Plácido
+Subject in review: Memento Pattern
+Review: explains the pattern in detail and the pattern fits the description.
 
 ## Code Smells Reviews: ---------------------------------------------------------------------------------------------------------
 
@@ -183,3 +206,16 @@ Reviewer's name: Joana Monteiro
 Subject in review: Long Parameter List (code smell 12)
 Review: Explains well the code smell, with the help of a good illustration.
 The given solution it's good.
+
+Reviewer's name: Joana Monteiro
+Subject in review: Message Chain
+Review: Identified well the code smell, with the help of a good illustration.
+The solution is also good
+
+Reviewer's name: Madalena Plácido
+Subject in review: Long Parameter List
+Review: identified the code smell well
+
+Reviewer's name: Catarina Costa
+Subject in review: Long Method
+Review: Identifies correctly the code smell, describes the problems with it, and provides a good solution
