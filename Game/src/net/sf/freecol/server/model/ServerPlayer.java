@@ -68,55 +68,14 @@ import net.sf.freecol.common.FreeColException;
 import net.sf.freecol.common.debug.FreeColDebugger;
 import net.sf.freecol.common.i18n.Messages;
 import net.sf.freecol.common.i18n.NameCache;
-import net.sf.freecol.common.model.Ability;
-import net.sf.freecol.common.model.AbstractGoods;
-import net.sf.freecol.common.model.AbstractUnit;
-import net.sf.freecol.common.model.Building;
-import net.sf.freecol.common.model.BuildingType;
-import net.sf.freecol.common.model.Colony;
-import net.sf.freecol.common.model.CombatModel;
+import net.sf.freecol.common.model.*;
 import net.sf.freecol.common.model.CombatModel.CombatEffectType;
 import net.sf.freecol.common.model.CombatModel.CombatResult;
 import net.sf.freecol.common.model.Constants.IndianDemandAction;
-import net.sf.freecol.common.model.DiplomaticTrade;
 import net.sf.freecol.common.model.DiplomaticTrade.TradeStatus;
-import net.sf.freecol.common.model.Disaster;
-import net.sf.freecol.common.model.Effect;
-import net.sf.freecol.common.model.Europe;
 import net.sf.freecol.common.model.Europe.MigrationType;
-import net.sf.freecol.common.model.Event;
-import net.sf.freecol.common.model.Force;
-import net.sf.freecol.common.model.FoundingFather;
 import net.sf.freecol.common.model.FoundingFather.FoundingFatherType;
-import net.sf.freecol.common.model.FreeColGameObject;
-import net.sf.freecol.common.model.Game;
-import net.sf.freecol.common.model.Goods;
-import net.sf.freecol.common.model.GoodsContainer;
-import net.sf.freecol.common.model.GoodsType;
-import net.sf.freecol.common.model.HistoryEvent;
-import net.sf.freecol.common.model.IndianSettlement;
-import net.sf.freecol.common.model.Location;
-import net.sf.freecol.common.model.Market;
-import net.sf.freecol.common.model.ModelMessage;
 import net.sf.freecol.common.model.ModelMessage.MessageType;
-import net.sf.freecol.common.model.Modifier;
-import net.sf.freecol.common.model.Monarch;
-import net.sf.freecol.common.model.Nation;
-import net.sf.freecol.common.model.Player;
-import net.sf.freecol.common.model.Role;
-import net.sf.freecol.common.model.Settlement;
-import net.sf.freecol.common.model.Specification;
-import net.sf.freecol.common.model.Stance;
-import net.sf.freecol.common.model.StringTemplate;
-import net.sf.freecol.common.model.Tension;
-import net.sf.freecol.common.model.Tile;
-import net.sf.freecol.common.model.TradeRoute;
-import net.sf.freecol.common.model.Turn;
-import net.sf.freecol.common.model.Unit;
-import net.sf.freecol.common.model.UnitChangeType;
-import net.sf.freecol.common.model.UnitType;
-import net.sf.freecol.common.model.UnitTypeChange;
-import net.sf.freecol.common.model.WorkLocation;
 import net.sf.freecol.common.model.pathfinding.GoalDeciders;
 import net.sf.freecol.common.networking.ChangeSet;
 import net.sf.freecol.common.networking.ChangeSet.See;
@@ -1660,6 +1619,22 @@ outer:  for (Effect effect : effects) {
                             }
                             break;
                         }
+                    case Effect.WINTER_PLAGUE_EFFECT:
+                    {
+                        List<ColonyTile> tiles = getColonyTileForEffect(colony, effect, random);
+
+                        for (ColonyTile tile : tiles) {
+                            Specification spec = this.getSpecification();
+                            tile.getWorkTile().changeType(spec.getTileType("model.tile.arctic"));
+
+                        }
+
+                        mm = new ModelMessage(MessageType.DISASTERS,
+                                effect.getId(), colony);
+
+                        colonyDirty = true;
+                        break;
+                    }
                     case Effect.DAMAGED_UNIT:
                         {
                             Unit unit = getUnitForEffect(colony, effect, random);
@@ -1708,6 +1683,11 @@ outer:  for (Effect effect : effects) {
         return messages;
     }
 
+    private List<ColonyTile> getColonyTileForEffect(Colony colony, Effect effect, Random random) {
+        List<ColonyTile> tiles = transform(colony.getColonyTiles(),
+                u -> effect.appliesTo(u.getWorkTile().getType()));
+        return (tiles.isEmpty()) ? null : tiles;
+    }
     private Building getBuildingForEffect(Colony colony,
                                           @SuppressWarnings("unused") Effect effect,
                                           Random random) {

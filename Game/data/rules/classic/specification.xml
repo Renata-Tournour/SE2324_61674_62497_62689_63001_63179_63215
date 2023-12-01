@@ -928,6 +928,9 @@
     <disaster id="model.disaster.sandstorm" extends="model.disaster.common" />
     <disaster id="model.disaster.stormsurge" extends="model.disaster.common" />
     <disaster id="model.disaster.tornado" extends="model.disaster.common" />
+    <disaster id="model.disaster.winterPlague" effects="ONE" natural="true" >
+      <effect id="model.disaster.effect.winterPlagueEffect" probability="100"/>
+    </disaster>
     <disaster id="model.disaster.indianRaid" effects="ONE" natural="false">
       <effect id="model.disaster.effect.lossOfMoney" probability="30"/>
       <effect id="model.disaster.effect.lossOfGoods" probability="50"/>
