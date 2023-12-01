@@ -1,8 +1,40 @@
 Created and updated mergeddoc.
 Added team member 4's code metric, design patterns, code smells and use case diagrams.
 Added the use case diagram for the volcano and its user story.
+//////////////////////////////////
 
-Beatriz Rosas:
-Added my code metric, design patterns, code smells and use case diagrams.
-Also added use case diagram for the wagon train management and its user story.
-Added "Conclusions" to the index: don't forget to write there.
+## Use Case Diagram Reviews:
+Reviewer's name: Renata Henriques
+Subject in review: Europe Management Panel - Use Case Diagram
+Review: I believe it's a good use case diagram, but the descriptions of the use cases could be a bit more detailed
+
+## Code Metrics Reviews
+Reviewer's Name: Madalena Plácido
+Subject in review: MOOD
+Review: Due to these metrics not being fully functional in the intelij plugin, this report will later be replaced with one from another metric. Nevertheless the report is very detailed about each metric and compares the results of the diferent metrics with the optimal intervals. Could have mentioned an example of code smell which could be identified with these metrics.
+
+## Design Patterns Reviews
+Reviewer's name: Madalena Plácido
+Subject in review: Composite
+Review: The pattern is well identified in the code and matches class diagram. The text section clearly explains the rationale for identifying this pattern.
+
+Reviewer's name: Catarina Pedroso
+Subject in review: Decorator
+Review: The pattern is well identified and explained, identifying all the relevant classes.
+
+Reviewer's name: Joana Monteiro
+Subject in review: Template
+Review: The pattern is well explained and demonstrated not only from the code but also with the diagram.
+
+## Code Smells Reviews
+Reviewer's name: Catarina Pedroso
+Subject in review: Long Method
+Review: Explains well why the smell was identified and gives a solution.
+
+Reviewer's name: Madalena Plácido
+Subject in review: Data Class
+Review: Identifies and explains the data class well and suggest an effective way to solve the smell.
+
+Reviewer's name: Catarina Costa
+Subject in review: Data Clumps
+Review: Correctly identifies the code smell and gives an easy solution to the problem using code already implemented in the project.
