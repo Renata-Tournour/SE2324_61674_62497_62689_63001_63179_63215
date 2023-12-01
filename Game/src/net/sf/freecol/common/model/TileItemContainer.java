@@ -104,41 +104,11 @@ public class TileItemContainer extends FreeColGameObject {
      *
      * @return A copy of the {@code TileItem}s.
      */
-    public List<TileItem> getTileItems() { //mudei de private para public
+    private List<TileItem> getTileItems() {
         synchronized (tileItems) {
             return new ArrayList<TileItem>(tileItems);
         }
     }
-
-    //*_*
-    public boolean hasThisResource(Resource resource){
-        return tileItems.contains(resource);
-    }
-
-    public boolean addPlagueEffect(TileItem item){
-        System.out.println("Items");
-        if (tileItems.isEmpty()){
-            System.out.println("Não existem items");
-            return false;
-        } else {
-            System.out.println("Items existentes:");
-                //if (item instanceof Resource) {
-                    System.out.println(item);
-                    //if (item.isNatural()) {
-                        System.out.println(item.getId());
-                        if (((Resource) item).hasPlague())
-                            return false;
-                        ((Resource) item).thereIsPlague(true);
-                        System.out.println("Não houve problemas");
-                    //}
-                //}
-
-            }
-
-
-        return true;
-    }
-    //
 
     /**
      * Clear the tile items list.

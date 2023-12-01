@@ -123,6 +123,9 @@ public final class UnitType extends BuildableType implements Consumer {
     /** The goods consumed per turn when in a settlement. */
     private TypeCountMap<GoodsType> consumption = null;
 
+    /** The number of turns this unit has left.*/
+    private int turnsLeft = 3;
+
     /**
      * Creates a new {@code UnitType} instance.
      *
@@ -394,6 +397,22 @@ public final class UnitType extends BuildableType implements Consumer {
      */
     public int getMovement() {
         return movement;
+    }
+
+    /**
+     * Get the number of turns this @code UnitType} has left before it disappears.
+     * @return the number of turns this @code Unit} has left.
+     */
+    public int getTurnsLeft(){
+        return this.turnsLeft;
+    }
+
+    /**
+     * Set the number of turns this @code UnitType} has left.
+     * @param numTurns The new number of turns.
+     */
+    public void setTurnsLeft(int numTurns){
+        this.turnsLeft = numTurns;
     }
 
     /**
@@ -728,6 +747,7 @@ public final class UnitType extends BuildableType implements Consumer {
         this.skillTaught = o.getSkillTaught();
         this.defaultRole = o.getDefaultRole();
         this.consumption = o.getConsumption();
+        this.turnsLeft = o.getTurnsLeft();
         return true;
     }
 
@@ -743,6 +763,7 @@ public final class UnitType extends BuildableType implements Consumer {
     private static final String LINE_OF_SIGHT_TAG = "line-of-sight";
     private static final String MERCENARY_PRICE_TAG = "mercenary-price";
     private static final String MOVEMENT_TAG = "movement";
+    private static final String TURNS_LEFT_TAG = "turns-left";
     private static final String MAXIMUM_EXPERIENCE_TAG = "maximum-experience";
     private static final String MAXIMUM_ATTRITION_TAG = "maximum-attrition";
     private static final String OFFENCE_TAG = "offence";
@@ -788,6 +809,8 @@ public final class UnitType extends BuildableType implements Consumer {
         xw.writeAttribute(DEFAULT_UNIT_TAG, this.defaultUnitType);
 
         xw.writeAttribute(MOVEMENT_TAG, movement);
+
+        xw.writeAttribute(TURNS_LEFT_TAG, turnsLeft);
 
         xw.writeAttribute(LINE_OF_SIGHT_TAG, lineOfSight);
 

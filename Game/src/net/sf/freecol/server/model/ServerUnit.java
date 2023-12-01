@@ -139,6 +139,7 @@ public class ServerUnit extends Unit implements TurnTaker {
         workLeft = template.getWorkLeft();
         workType = spec.getGoodsType(template.getWorkType().getId());
         movesLeft = template.getMovesLeft();
+        turnsLeft = template.getTurnsLeft();
         hitPoints = template.getType().getHitPoints();
         changeRole(spec.getRole(template.getRole().getId()),
                    template.getRoleCount());
@@ -174,6 +175,7 @@ public class ServerUnit extends Unit implements TurnTaker {
         this.workLeft = -1;
         this.workType = null;
         this.movesLeft = getInitialMovesLeft();
+        this.turnsLeft = 40;
         this.experienceType = null;
         this.experience = 0;
         this.workImprovement = null;
