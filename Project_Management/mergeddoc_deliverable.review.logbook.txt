@@ -14,6 +14,9 @@ Reviewer's name: Renata Henriques
 Subject in review: Europe Management Panel - Use Case Diagram
 Review: I believe it's a good use case diagram, but the descriptions of the use cases could be a bit more detailed
 
+Reviewer's name: Joana Monteiro
+Subject in review: Main Screen - Use Case Diagram
+Review:  The use case diagram is well done, but the descriptions of the use cases could be a bit more detailed
 
 ## Code Metrics Reviews: ---------------------------------------------------------------------------------------------------------
 
